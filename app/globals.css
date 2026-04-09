@@ -1,26 +1,87 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@plugin "@tailwindcss/typography";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Brand Colors */
+  --color-kc-blue: #0F4C81;
+  --color-kc-blue-dark: #0a3a66;
+  --color-kc-green: #70A288;
+  --color-kc-yellow: #FFAD05;
+  --color-kc-brown: #220C10;
+  --color-kc-dark: #162123;
+  --color-kc-bg-blue: #D3EBFB;
+  --color-kc-bg-grey: #F3F5F8;
+  --color-kc-light-blue: #C3D2DF;
+  --color-kc-light-green: #DBE8E1;
+  --color-kc-light-yellow: #FFEBC0;
+  --color-kc-light-brown: #EAE4E5;
+  --color-kc-text-secondary: #5a6a6e;
+
+  /* Fonts */
+  --font-heading: var(--font-space-grotesk), sans-serif;
+  --font-body: var(--font-montserrat), sans-serif;
+
+  /* Max Width */
+  --container-content: 1200px;
 }
 
+/* Base styles */
+body {
+  font-family: var(--font-body);
+  color: var(--color-kc-dark);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Prose / typography overrides for MDX content */
+.prose {
+  --tw-prose-body: var(--color-kc-dark);
+  --tw-prose-headings: var(--color-kc-dark);
+  --tw-prose-links: var(--color-kc-blue);
+  --tw-prose-bold: var(--color-kc-dark);
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  font-family: var(--font-heading);
+}
+
+/* Dark mode base */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background-color: var(--color-kc-dark);
+    color: #ffffff;
+  }
+
+  .prose {
+    --tw-prose-body: #e5e7eb;
+    --tw-prose-headings: #ffffff;
+    --tw-prose-links: #93c5fd;
+    --tw-prose-bold: #ffffff;
+    --tw-prose-counters: #d1d5db;
+    --tw-prose-bullets: #d1d5db;
+    --tw-prose-hr: #374151;
+    --tw-prose-quotes: #e5e7eb;
+    --tw-prose-quote-borders: var(--color-kc-blue);
+    --tw-prose-code: #ffffff;
+    --tw-prose-pre-code: #e5e7eb;
+    --tw-prose-pre-bg: #1f2937;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Safety net: ensure content is never permanently hidden for reduced-motion users */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Dark mode alternating section backgrounds for visual distinction */
+@theme inline {
+  --color-kc-dark-alt: #1e2d30;
+  --color-kc-dark-card: #1a2628;
 }
