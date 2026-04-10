@@ -73,6 +73,58 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
 
   const authorInfo = teamMembers[frontmatter.author]
 
+  const faqData: Record<string, { question: string; answer: string }[]> = {
+    'california-water-dilemma-part-1': [
+      {
+        question: 'Why is it so difficult to manage water in a state as large as California?',
+        answer:
+          "California's water challenge is not simply about scarcity — it's a data and infrastructure problem. The state's water delivery system was built for a different era and lacks the comprehensive measurement tools needed to manage resources efficiently under 21st-century climate conditions.",
+      },
+      {
+        question: "What is California's biggest water problem?",
+        answer:
+          'Outdated water law, aging infrastructure, and a critical lack of data. California still operates under water rights doctrines that predate modern hydrology. Combined with a delivery system designed for mid-20th century agricultural patterns, the state cannot yet manage water with the precision the current climate demands.',
+      },
+      {
+        question: 'How can California better manage its water resources?',
+        answer:
+          'Modernizing the measurement and monitoring infrastructure is the essential first step. This means deploying real-time sensors, building integrated data systems, and updating the legal and regulatory framework that governs water allocation.',
+      },
+    ],
+    'decarbonizing-agriculture-part-1': [
+      {
+        question: 'What percentage of US greenhouse gas emissions come from agriculture?',
+        answer:
+          'According to the EPA, agriculture accounts for approximately 11.5% of total US greenhouse gas emissions. When you expand to the full food system — including processing, packaging, transportation, and retail — the share rises to roughly one-third of global emissions.',
+      },
+      {
+        question: 'What are the main sources of greenhouse gas emissions in agriculture?',
+        answer:
+          'The three primary agricultural GHGs are methane (CH4), nitrous oxide (N2O), and carbon dioxide (CO2). Key sources include enteric fermentation from cattle, manure management, rice cultivation, and synthetic fertilizer application.',
+      },
+      {
+        question: 'Why is agriculture such a significant source of emissions?',
+        answer:
+          'Unlike many industrial sectors, agriculture involves biological processes that are inherently difficult to eliminate. Ruminant livestock, flooded rice paddies, and microbial activity in soils produce GHGs as a byproduct of natural processes — making reduction a matter of management practices rather than simply switching fuel sources.',
+      },
+    ],
+  }
+
+  const faqJsonLd = faqData[slug]
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqData[slug].map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      }
+    : null
+
   const articleJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -94,6 +146,12 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
       <div className="pt-20">
         <article className="py-12 md:py-20">
           {/* Breadcrumb + Header — full width centered */}
