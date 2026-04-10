@@ -21,7 +21,7 @@ function XIcon({ className }: { className?: string }) {
 
 export default function ShareBar({ title, slug }: { title: string; slug: string }) {
   const [copied, setCopied] = useState(false)
-  const url = `https://klimateconsulting.com/insights/${slug}/`
+  const url = `https://klimate.consulting/insights/${slug}/`
 
   const handleCopyLink = async () => {
     try {

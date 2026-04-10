@@ -4,7 +4,7 @@ import { getAllInsights, getAllProjects } from '@/lib/mdx'
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://klimateconsulting.com'
+  const baseUrl = 'https://klimate.consulting'
 
   const staticPages = [
     { url: `${baseUrl}/`, priority: 1.0, changeFrequency: 'weekly' as const },

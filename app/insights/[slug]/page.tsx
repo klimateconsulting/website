@@ -83,7 +83,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
     publisher: {
       '@type': 'Organization',
       name: 'Klimate Consulting',
-      url: 'https://klimateconsulting.com',
+      url: 'https://klimate.consulting',
     },
   }
 

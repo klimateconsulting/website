@@ -20,7 +20,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://klimateconsulting.com'),
+  metadataBase: new URL('https://klimate.consulting'),
   title: {
     default: 'Klimate Consulting — Research-Based Sustainability Solutions',
     template: '%s | Klimate Consulting',
@@ -50,7 +50,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Klimate Consulting',
-  url: 'https://klimateconsulting.com',
+  url: 'https://klimate.consulting',
   email: 'hello@klimateconsulting.com',
   description:
     'Applied sustainability research and consulting for agriculture, energy, water, and food systems.',
