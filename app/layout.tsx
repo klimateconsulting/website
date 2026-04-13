@@ -56,8 +56,11 @@ const jsonLd = {
     'Applied sustainability research and consulting for agriculture, energy, water, and food systems.',
   address: {
     '@type': 'PostalAddress',
+    streetAddress: '350 California Street',
     addressLocality: 'San Francisco',
     addressRegion: 'CA',
+    postalCode: '94104',
+    addressCountry: 'US',
   },
   sameAs: ['https://www.linkedin.com/company/klimate-consulting/'],
 }
