@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 const clients = [
   'Lawrence Berkeley National Laboratory',
   'Natural Resources Defense Council',
+  'University of California, Davis',
   'Ceres',
   'Carba',
   'Scale Microgrid Solutions',

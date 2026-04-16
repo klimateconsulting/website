@@ -40,6 +40,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
       'decarbonizing-agriculture-part-1': 'Decarbonizing Agriculture: Where Do Emissions Come From?',
       'decarbonizing-agriculture-part-2': 'How to Decarbonize Agriculture: Practical Strategies',
       'navigating-esg-disclosure': 'Navigating the ESG Disclosure Landscape: Challenges and Promises',
+      'navigating-the-changing-tides-of-sustainability':
+        'Beyond Carbon: How Klimate Consulting Approaches Modern Sustainability',
     }
 
     const seoDescriptions: Record<string, string> = {
@@ -53,6 +55,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
         'A research-based guide to reducing methane, nitrous oxide, and CO2 from US farming — covering feed strategies, manure management, and soil carbon.',
       'navigating-esg-disclosure':
         'Explores the evolving world of ESG disclosure, from the rising importance of sustainability reporting to key regulatory developments in the SEC and EU.',
+      'navigating-the-changing-tides-of-sustainability':
+        "Sustainability has outgrown carbon accounting. How standards have evolved, why measurement is harder outside the power sector, and how Klimate Consulting works in the gaps.",
     }
 
     return {
@@ -182,6 +186,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
                     month: 'long',
                     day: 'numeric',
                     year: 'numeric',
+                    timeZone: 'UTC',
                   })}
                 </time>
               </div>
@@ -243,6 +248,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
                         month: 'long',
                         day: 'numeric',
                         year: 'numeric',
+                        timeZone: 'UTC',
                       })}
                     </p>
                   )}

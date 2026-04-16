@@ -30,7 +30,7 @@ const externalPubs = [
     title: 'What Happened To Agricultural Demand Response?',
     source: 'Utility Dive',
     author: 'Arian Aghajanzadeh',
-    href: 'https://www.utilitydive.com/news/what-happened-to-agricultural-demand-response/510871/',
+    href: 'https://www.utilitydive.com/news/what-happened-to-agricultural-demand-response/550829/',
   },
   {
     title: 'Food Eco-Labels: Re-Thinking Life Cycle Assessments',

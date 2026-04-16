@@ -59,6 +59,7 @@ export default function InsightCard({
               month: 'short',
               day: 'numeric',
               year: 'numeric',
+              timeZone: 'UTC',
             })}
           </time>
         </div>
