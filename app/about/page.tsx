@@ -90,35 +90,65 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {/* Source: klimate-owned */}
-            <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
+          {/* Standalone: emissions trajectory chart with vision text */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <div className="rounded-xl overflow-hidden bg-white p-6 shadow-sm dark:shadow-none">
+              {/* Source: klimate-owned */}
               <Image
                 src="/images/charts/global-warming-v2.png"
-                alt="Global warming chart showing temperature rise scenarios"
-                width={600}
-                height={400}
+                alt="Global emissions trajectory: business-as-usual versus a path to net-zero by mid-century and net-negative beyond, combining conventional mitigation with carbon removal."
+                width={1200}
+                height={750}
                 className="w-full h-auto rounded-lg"
               />
             </div>
-            <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
-              <Image
-                src="/images/charts/ghg-by-sector.png"
-                alt="Global greenhouse gas emissions by economic sector"
-                width={600}
-                height={400}
-                className="w-full h-auto rounded-lg"
-              />
+            <div className="max-w-3xl mx-auto mt-6 text-center">
+              <h3 className="font-heading text-xl font-bold text-kc-dark dark:text-white mb-3">
+                Bending the Curve
+              </h3>
+              <p className="font-body text-base text-kc-text-secondary dark:text-gray-300 leading-relaxed">
+                This is the trajectory we work toward: pulling the line away from business-as-usual,
+                reaching net-zero by mid-century, then net-negative through carbon removal. Every
+                Klimate engagement — from microgrid deployments and energy management research to
+                food-system decarbonization and water modernization — is aimed at moving that line.
+              </p>
             </div>
           </div>
 
-          <div className="max-w-3xl mx-auto mt-12 text-center">
-            <p className="font-body text-lg text-kc-dark dark:text-white">
-              We focus on decarbonizing industry, agriculture, forestry, and other land use, which
-              combined make up about{' '}
-              <span className="font-heading font-bold text-2xl text-kc-blue">45%</span> of global
-              emissions.
-            </p>
+          {/* Paired square charts: sector breakdown + Klimate's intersection */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col">
+              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
+                {/* Source: klimate-owned */}
+                <Image
+                  src="/images/charts/ghg-by-sector.png"
+                  alt="Global greenhouse gas emissions by economic sector: 25% electricity & heat, 24% agriculture/forestry/land use, 21% industry, 14% transportation, 10% other energy, 6% buildings."
+                  width={600}
+                  height={750}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="font-body text-sm text-center text-kc-text-secondary dark:text-gray-300 mt-3 px-2">
+                Where the emissions live. Industry plus agriculture, forestry, and land use are{' '}
+                <span className="font-semibold text-kc-blue">45%</span> of the global total.
+              </p>
+            </div>
+            <div className="flex flex-col">
+              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
+                {/* Source: klimate-owned */}
+                <Image
+                  src="/images/charts/industries-chart.png"
+                  alt="Klimate Consulting's focus areas as overlapping circles — Carbon, Agriculture, Water, and Energy — converging at the Food System."
+                  width={600}
+                  height={600}
+                  className="w-full h-auto rounded-lg"
+                />
+              </div>
+              <p className="font-body text-sm text-center text-kc-text-secondary dark:text-gray-300 mt-3 px-2">
+                Where we work. Carbon, agriculture, water, and energy — overlapping in the food
+                system that ties them all together.
+              </p>
+            </div>
           </div>
         </div>
       </section>
