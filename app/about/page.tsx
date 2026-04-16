@@ -116,9 +116,9 @@ export default function AboutPage() {
           </div>
 
           {/* Paired square charts: sector breakdown + Klimate's intersection */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div className="flex flex-col">
-              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
+            <div className="flex flex-col h-full">
+              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none flex-1 flex items-center justify-center">
                 {/* Source: klimate-owned */}
                 <Image
                   src="/images/charts/ghg-by-sector.png"
@@ -133,8 +133,8 @@ export default function AboutPage() {
                 <span className="font-semibold text-kc-blue">45%</span> of the global total.
               </p>
             </div>
-            <div className="flex flex-col">
-              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none">
+            <div className="flex flex-col h-full">
+              <div className="rounded-xl overflow-hidden bg-white p-4 shadow-sm dark:shadow-none flex-1 flex items-center justify-center">
                 {/* Source: klimate-owned */}
                 <Image
                   src="/images/charts/industries-chart.png"
