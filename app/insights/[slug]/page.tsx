@@ -42,6 +42,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
       'navigating-esg-disclosure': 'Navigating the ESG Disclosure Landscape: Challenges and Promises',
       'navigating-the-changing-tides-of-sustainability':
         'Beyond Carbon: How Klimate Consulting Approaches Modern Sustainability',
+      'microirrigation-energy-paradox':
+        'The Microirrigation Energy Paradox: Why California Farm Electricity Use Is Rising',
     }
 
     const seoDescriptions: Record<string, string> = {
@@ -57,6 +59,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
         'Explores the evolving world of ESG disclosure, from the rising importance of sustainability reporting to key regulatory developments in the SEC and EU.',
       'navigating-the-changing-tides-of-sustainability':
         "Sustainability has outgrown carbon accounting. How standards have evolved, why measurement is harder outside the power sector, and how Klimate Consulting works in the gaps.",
+      'microirrigation-energy-paradox':
+        "California converted half its farmland to microirrigation — yet on-farm electricity use is climbing. Eight interactive charts explain the water-energy paradox and what growers can do.",
     }
 
     return {
