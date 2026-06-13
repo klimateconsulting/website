@@ -11,18 +11,20 @@ interface Post {
   date: string
   author: string
   sector: string
+  sectors?: string[]
   description: string
   readingTime: number
   image?: string
 }
 
-const sectors = ['all', 'agriculture', 'energy', 'water', 'food-systems']
+const sectors = ['all', 'agriculture', 'energy', 'water', 'food-systems', 'ecosystem']
 const sectorLabels: Record<string, string> = {
   all: 'All',
   agriculture: 'Agriculture',
   energy: 'Energy',
   water: 'Water',
   'food-systems': 'Food Systems',
+  ecosystem: 'Ecosystems',
 }
 
 const externalPubs = [
@@ -43,7 +45,10 @@ const externalPubs = [
 export default function InsightsListClient({ posts }: { posts: Post[] }) {
   const [filter, setFilter] = useState('all')
 
-  const filtered = filter === 'all' ? posts : posts.filter((p) => p.sector === filter)
+  const filtered =
+    filter === 'all'
+      ? posts
+      : posts.filter((p) => p.sector === filter || p.sectors?.includes(filter))
 
   return (
     <div className="pt-20">

@@ -9,6 +9,9 @@ export interface PostFrontmatter {
   date: string
   author: string
   sector: string
+  /** Optional extra sectors for multi-tagged posts. The primary `sector` still
+   *  drives the badge color and SEO; `sectors` adds the post to additional filters. */
+  sectors?: string[]
   description: string
   readingTime: number
   image?: string

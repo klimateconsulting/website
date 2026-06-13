@@ -8,6 +8,7 @@ interface InsightCardProps {
   date: string
   author: string
   sector: string
+  sectors?: string[]
   description: string
   readingTime: number
   image?: string
@@ -19,10 +20,12 @@ export default function InsightCard({
   date,
   author,
   sector,
+  sectors,
   description,
   readingTime,
   image,
 }: InsightCardProps) {
+  const tags = Array.from(new Set([sector, ...(sectors ?? [])]))
   return (
     <Link
       href={`/insights/${slug}/`}
@@ -40,8 +43,10 @@ export default function InsightCard({
         </div>
       )}
       <div className="p-6">
-        <div className="flex items-center gap-3 mb-3">
-          <TagBadge sector={sector} />
+        <div className="flex items-center flex-wrap gap-2 mb-3">
+          {tags.map((s) => (
+            <TagBadge key={s} sector={s} />
+          ))}
           <span className="text-xs text-kc-text-secondary dark:text-gray-300">
             {readingTime} min read
           </span>

@@ -3,10 +3,16 @@ const sectorColors: Record<string, string> = {
   energy: 'bg-kc-light-yellow text-kc-brown dark:bg-kc-yellow/20 dark:text-kc-yellow',
   water: 'bg-kc-light-blue text-kc-blue dark:bg-kc-blue/20 dark:text-kc-light-blue',
   'food-systems': 'bg-kc-light-brown text-kc-brown dark:bg-kc-brown/20 dark:text-kc-light-brown',
+  ecosystem: 'bg-kc-bg-blue text-kc-green dark:bg-kc-green/20 dark:text-kc-green',
+}
+
+const sectorLabels: Record<string, string> = {
+  'food-systems': 'Food Systems',
+  ecosystem: 'Ecosystems',
 }
 
 export default function TagBadge({ sector }: { sector: string }) {
-  const label = sector === 'food-systems' ? 'Food Systems' : sector.charAt(0).toUpperCase() + sector.slice(1)
+  const label = sectorLabels[sector] || sector.charAt(0).toUpperCase() + sector.slice(1)
   return (
     <span
       className={`inline-block text-xs font-semibold font-body px-2.5 py-1 rounded-full ${

@@ -44,6 +44,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
         'Beyond Carbon: How Klimate Consulting Approaches Modern Sustainability',
       'microirrigation-energy-paradox':
         'The Microirrigation Energy Paradox: Why California Farm Electricity Use Is Rising',
+      'sargassum-golden-tide':
+        "The Golden Tide: Tracking the World's Largest Seaweed Bloom",
     }
 
     const seoDescriptions: Record<string, string> = {
@@ -61,6 +63,8 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
         "Sustainability has outgrown carbon accounting. How standards have evolved, why measurement is harder outside the power sector, and how Klimate Consulting works in the gaps.",
       'microirrigation-energy-paradox':
         "California converted half its farmland to microirrigation — yet on-farm electricity use is climbing. Eight interactive charts explain the water-energy paradox and what growers can do.",
+      'sargassum-golden-tide':
+        "The Great Atlantic Sargassum Belt is the world's largest macroalgal bloom, up roughly sevenfold since 2011. An interactive look at how it grew, how anyone can track it with free satellite data, and how it might become a resource.",
     }
 
     return {
@@ -75,8 +79,16 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
   const { frontmatter, content, headings } = getInsightBySlug(slug)
   const allInsights = getAllInsights()
 
+  const postTags = Array.from(
+    new Set([frontmatter.sector, ...(frontmatter.sectors ?? [])])
+  )
+
   const relatedPosts = allInsights
-    .filter((p) => p.slug !== slug && p.frontmatter.sector === frontmatter.sector)
+    .filter((p) => {
+      if (p.slug === slug) return false
+      const otherTags = [p.frontmatter.sector, ...(p.frontmatter.sectors ?? [])]
+      return otherTags.some((t) => postTags.includes(t))
+    })
     .slice(0, 2)
 
   const authorInfo = teamMembers[frontmatter.author]
@@ -173,8 +185,10 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
             </nav>
 
             <div className="max-w-[800px] mb-8">
-              <div className="flex items-center gap-3 mb-4">
-                <TagBadge sector={frontmatter.sector} />
+              <div className="flex items-center flex-wrap gap-2 mb-4">
+                {postTags.map((s) => (
+                  <TagBadge key={s} sector={s} />
+                ))}
                 <span className="text-sm text-kc-text-secondary dark:text-gray-300">
                   {frontmatter.readingTime} min read
                 </span>
