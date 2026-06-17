@@ -38,7 +38,7 @@ const externalPubs = [
     title: 'Food Eco-Labels: Re-Thinking Life Cycle Assessments',
     source: 'HowGood',
     author: 'Klimate Consulting',
-    href: 'https://howgood.com/',
+    href: 'https://www.howgood.com/blog/food-eco-labels-re-thinking-life-cycle-assessments',
   },
 ]
 
