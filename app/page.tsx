@@ -1,5 +1,4 @@
 import Hero from '@/components/home/Hero'
-import ImpactStatement from '@/components/home/ImpactStatement'
 import FocusAreas from '@/components/home/FocusAreas'
 import FeaturedProjects from '@/components/home/FeaturedProjects'
 import DataLabsTeaser from '@/components/home/DataLabsTeaser'
@@ -12,7 +11,6 @@ export default function HomePage() {
     <>
       <LegacyHashRedirect />
       <Hero />
-      <ImpactStatement />
       <FocusAreas />
       <FeaturedProjects />
       <DataLabsTeaser />
