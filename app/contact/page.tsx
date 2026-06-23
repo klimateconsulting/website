@@ -1,7 +1,15 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Mail, MapPin } from 'lucide-react'
+
+// ── Contact form backend config ────────────────────────────────────────────
+// Both values below are public (the site key is meant to be exposed, and the
+// Apps Script URL is called directly from the browser). The Turnstile SECRET
+// key lives only inside the Apps Script — never here.
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCxrHSbGzCdJTw4Qrcu-Lgg3XgVsycjYKw74pEVEi1TiknjHJnOb5ZMmgahMqgvw/exec'
+const TURNSTILE_SITE_KEY = '0x4AAAAAADp4ma2CwHgvVDoK'
+const TURNSTILE_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -13,6 +21,46 @@ function LinkedinIcon({ className }: { className?: string }) {
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+
+  // Load the Cloudflare Turnstile script once. It auto-renders any element
+  // with the `cf-turnstile` class and injects a hidden `cf-turnstile-response`
+  // input into the surrounding form.
+  useEffect(() => {
+    if (document.querySelector(`script[src="${TURNSTILE_SCRIPT}"]`)) return
+    const s = document.createElement('script')
+    s.src = TURNSTILE_SCRIPT
+    s.async = true
+    s.defer = true
+    document.head.appendChild(s)
+  }, [])
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError('')
+    const form = e.currentTarget
+    const data = new FormData(form)
+
+    // Require a Turnstile token before sending.
+    if (!data.get('cf-turnstile-response')) {
+      setError('Please complete the verification below.')
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      // Static site → no server, so we POST straight to the Apps Script web
+      // app. Its response can't be read cross-origin (no CORS headers from
+      // Apps Script), so we use no-cors and treat a resolved request as sent.
+      await fetch(SCRIPT_URL, { method: 'POST', body: data, mode: 'no-cors' })
+      setSubmitted(true)
+    } catch {
+      setError('Something went wrong sending your message. Please email us directly.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div className="pt-20">
@@ -43,12 +91,7 @@ export default function ContactPage() {
                   </p>
                 </div>
               ) : (
-                <form
-                  action="https://formspree.io/f/hello@klimateconsulting.com"
-                  method="POST"
-                  onSubmit={() => setSubmitted(true)}
-                  className="space-y-6"
-                >
+                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
@@ -127,11 +170,21 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {/* Cloudflare Turnstile — auto-rendered by the script above */}
+                  <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
+
+                  {error && (
+                    <p className="text-sm text-red-600 dark:text-red-400" role="alert">
+                      {error}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
-                    className="bg-kc-blue text-white font-body font-semibold text-sm px-8 py-3 rounded-md hover:bg-kc-blue-dark transition-colors hover:scale-[1.02]"
+                    disabled={submitting}
+                    className="bg-kc-blue text-white font-body font-semibold text-sm px-8 py-3 rounded-md hover:bg-kc-blue-dark transition-colors hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                   >
-                    Send Message
+                    {submitting ? 'Sending…' : 'Send Message'}
                   </button>
 
                   <p className="text-sm text-kc-text-secondary dark:text-gray-300 mt-4">
