@@ -15,6 +15,7 @@ const services = [
 const navLinks = [
   { name: 'Projects', href: '/projects/' },
   { name: 'Insights', href: '/insights/' },
+  { name: 'Research', href: '/research/' },
   { name: 'Data Labs', href: '/data-labs/' },
   { name: 'Team', href: '/team/' },
   { name: 'About', href: '/about/' },
