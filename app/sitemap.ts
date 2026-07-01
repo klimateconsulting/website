@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/services/food-systems/`, priority: 0.6, changeFrequency: 'monthly' as const },
     { url: `${baseUrl}/projects/`, priority: 0.8, changeFrequency: 'monthly' as const },
     { url: `${baseUrl}/insights/`, priority: 0.8, changeFrequency: 'weekly' as const },
+    { url: `${baseUrl}/research/`, priority: 0.7, changeFrequency: 'monthly' as const },
     { url: `${baseUrl}/data-labs/`, priority: 0.6, changeFrequency: 'monthly' as const },
     { url: `${baseUrl}/contact/`, priority: 0.6, changeFrequency: 'monthly' as const },
   ]

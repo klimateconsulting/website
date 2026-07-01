@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Team — Klimate Consulting',
@@ -70,6 +71,16 @@ export default function TeamPage() {
                   {member.education && (
                     <p className="font-body text-sm text-kc-text-secondary dark:text-gray-400">
                       <strong>Education:</strong> {member.education}
+                    </p>
+                  )}
+                  {member.name === 'Arian Aghajanzadeh' && (
+                    <p className="font-body text-sm mt-4">
+                      <Link
+                        href="/research/"
+                        className="text-kc-blue dark:text-kc-light-blue font-semibold hover:underline"
+                      >
+                        Explore Arian&apos;s research &amp; publications →
+                      </Link>
                     </p>
                   )}
                 </div>

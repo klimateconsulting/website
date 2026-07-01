@@ -246,12 +246,20 @@ export default function AboutPage() {
               </div>
             ))}
           </div>
-          <Link
-            href="/team/"
-            className="text-kc-blue dark:text-kc-light-blue font-semibold hover:underline"
-          >
-            Meet the full team &rarr;
-          </Link>
+          <div className="flex flex-wrap gap-x-8 gap-y-2 justify-center">
+            <Link
+              href="/team/"
+              className="text-kc-blue dark:text-kc-light-blue font-semibold hover:underline"
+            >
+              Meet the full team &rarr;
+            </Link>
+            <Link
+              href="/research/"
+              className="text-kc-blue dark:text-kc-light-blue font-semibold hover:underline"
+            >
+              Explore our research &amp; publications &rarr;
+            </Link>
+          </div>
         </div>
       </section>
     </div>
