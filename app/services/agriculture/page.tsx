@@ -94,6 +94,9 @@ export default function AgriculturePage() {
               <Link href="/insights/decarbonizing-agriculture-part-2/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-green dark:hover:bg-kc-green/10 transition-colors">
                 <span className="font-heading font-bold text-kc-dark dark:text-white">Decarbonizing Agriculture Part 2: Reduction Strategies</span>
               </Link>
+              <Link href="/insights/microirrigation-energy-paradox/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-green dark:hover:bg-kc-green/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">The Microirrigation Energy Paradox: Why Farm Electricity Use Is Rising</span>
+              </Link>
             </div>
           </div>
 

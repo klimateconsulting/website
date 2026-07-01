@@ -51,6 +51,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       lastModified: new Date('2026-06-12'),
     },
+    {
+      url: `${baseUrl}/blog-posts/price-of-water/`,
+      priority: 0.8,
+      changeFrequency: 'monthly' as const,
+      lastModified: new Date('2026-06-22'),
+    },
   ]
 
   return [...staticPages, ...projectPages, ...insightPages, ...interactivePosts]

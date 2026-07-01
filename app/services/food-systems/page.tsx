@@ -90,6 +90,12 @@ export default function FoodSystemsPage() {
               <Link href="/insights/navigating-esg-disclosure/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-brown dark:hover:bg-kc-brown/10 transition-colors">
                 <span className="font-heading font-bold text-kc-dark dark:text-white">Navigating the ESG Disclosure Landscape</span>
               </Link>
+              <Link href="/insights/navigating-the-changing-tides-of-sustainability/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-brown dark:hover:bg-kc-brown/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">Beyond Carbon: Navigating the Future of Sustainability</span>
+              </Link>
+              <Link href="/insights/decarbonizing-agriculture-part-1/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-brown dark:hover:bg-kc-brown/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">Decarbonizing Agriculture Part 1: Understanding Emissions Sources</span>
+              </Link>
             </div>
           </div>
 

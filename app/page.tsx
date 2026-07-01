@@ -2,6 +2,7 @@ import Hero from '@/components/home/Hero'
 import FocusAreas from '@/components/home/FocusAreas'
 import FeaturedProjects from '@/components/home/FeaturedProjects'
 import DataLabsTeaser from '@/components/home/DataLabsTeaser'
+import FromOurResearch from '@/components/home/FromOurResearch'
 import ClientLogos from '@/components/home/ClientLogos'
 import CTAStrip from '@/components/home/CTAStrip'
 import LegacyHashRedirect from '@/components/shared/LegacyHashRedirect'
@@ -19,6 +20,7 @@ export default function HomePage() {
       <FocusAreas />
       <FeaturedProjects />
       <DataLabsTeaser />
+      <FromOurResearch />
       <ClientLogos />
       <CTAStrip />
     </>
