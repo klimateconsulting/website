@@ -20,6 +20,7 @@ const companyLinks = [
   { name: 'Team', href: '/team/' },
   { name: 'Projects', href: '/projects/' },
   { name: 'Insights', href: '/insights/' },
+  { name: 'Research', href: '/research/' },
   { name: 'Contact', href: '/contact/' },
 ]
 
