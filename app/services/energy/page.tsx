@@ -88,6 +88,14 @@ export default function EnergyPage() {
               Related Insights
             </h3>
             <div className="space-y-3">
+              <Link href="/insights/microirrigation-energy-paradox/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-yellow dark:hover:bg-kc-yellow/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">The Microirrigation Energy Paradox: Why Farm Electricity Use Is Rising</span>
+                <span className="block text-sm text-kc-text-secondary dark:text-gray-300 mt-1">How efficiency upgrades shifted California farms toward higher electricity demand</span>
+              </Link>
+              <Link href="/insights/decarbonizing-agriculture-part-2/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-yellow dark:hover:bg-kc-yellow/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">Decarbonizing Agriculture Part 2: Reduction Strategies</span>
+                <span className="block text-sm text-kc-text-secondary dark:text-gray-300 mt-1">Anaerobic digestion, biogas, and on-farm energy pathways</span>
+              </Link>
               <Link href="/insights/california-water-dilemma-part-1/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-yellow dark:hover:bg-kc-yellow/10 transition-colors">
                 <span className="font-heading font-bold text-kc-dark dark:text-white">California&apos;s Water Dilemma: We Cannot Manage What We Don&apos;t Measure</span>
                 <span className="block text-sm text-kc-text-secondary dark:text-gray-300 mt-1">Covers the water-energy nexus and infrastructure challenges</span>

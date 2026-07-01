@@ -93,6 +93,9 @@ export default function WaterPage() {
               <Link href="/insights/california-water-dilemma-part-2/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-blue dark:hover:bg-kc-blue/10 transition-colors">
                 <span className="font-heading font-bold text-kc-dark dark:text-white">California&apos;s Water Dilemma Part 2: Water [Data] Scarcity</span>
               </Link>
+              <Link href="/insights/price-of-water-california/" className="block p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg hover:bg-kc-light-blue dark:hover:bg-kc-blue/10 transition-colors">
+                <span className="font-heading font-bold text-kc-dark dark:text-white">The Price of Water in California</span>
+              </Link>
             </div>
           </div>
 
