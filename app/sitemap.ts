@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next'
 import { getAllInsights, getAllProjects } from '@/lib/mdx'
+import { siteUrl } from '@/lib/metadata'
 
 export const dynamic = 'force-static'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://klimate.consulting'
+  const baseUrl = siteUrl
 
   const staticPages = [
     { url: `${baseUrl}/`, priority: 1.0, changeFrequency: 'weekly' as const },
@@ -35,5 +36,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: new Date(p.frontmatter.date),
   }))
 
-  return [...staticPages, ...projectPages, ...insightPages]
+  // Standalone interactive posts served as static files under public/blog-posts/
+  // (not MDX routes), so they're listed explicitly.
+  const interactivePosts = [
+    {
+      url: `${baseUrl}/blog-posts/microirrigation/`,
+      priority: 0.8,
+      changeFrequency: 'monthly' as const,
+      lastModified: new Date('2026-04-17'),
+    },
+    {
+      url: `${baseUrl}/blog-posts/sargassum/`,
+      priority: 0.8,
+      changeFrequency: 'monthly' as const,
+      lastModified: new Date('2026-06-12'),
+    },
+  ]
+
+  return [...staticPages, ...projectPages, ...insightPages, ...interactivePosts]
 }

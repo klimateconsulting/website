@@ -5,6 +5,7 @@ import Button from '@/components/shared/Button'
 
 export const metadata: Metadata = {
   title: 'Food Systems Consulting | Klimate Consulting',
+  alternates: { canonical: '/services/food-systems/' },
   description:
     'Emission accounting, supply chain analysis, and Scope 3 reporting for the food and beverage industry. Farm to fork sustainability consulting.',
 }

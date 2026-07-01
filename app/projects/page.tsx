@@ -5,6 +5,7 @@ import SectionHeader from '@/components/shared/SectionHeader'
 
 export const metadata: Metadata = {
   title: 'Our Work — Klimate Consulting',
+  alternates: { canonical: '/projects/' },
   description:
     'Case studies from our applied research and consulting with LBNL, NRDC, Ceres, Carba, and Scale Microgrid.',
 }

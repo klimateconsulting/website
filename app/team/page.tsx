@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 export const metadata: Metadata = {
   title: 'Team — Klimate Consulting',
+  alternates: { canonical: '/team/' },
   description:
     'Meet the Klimate Consulting team. Experts in sustainability research, energy, water, and agriculture.',
 }

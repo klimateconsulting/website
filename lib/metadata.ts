@@ -1,4 +1,4 @@
-export const siteUrl = 'https://klimate.consulting'
+export const siteUrl = 'https://klimateconsulting.com'
 
 export const defaultMetadata = {
   metadataBase: new URL(siteUrl),

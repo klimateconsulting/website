@@ -4,6 +4,7 @@ import Button from '@/components/shared/Button'
 
 export const metadata: Metadata = {
   title: 'Klimate Data Labs — Open Sustainability Dashboards',
+  alternates: { canonical: '/data-labs/' },
   description:
     'Free, open-source data dashboards for California water, U.S. food systems, and industrial energy efficiency.',
 }
