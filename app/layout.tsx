@@ -3,6 +3,7 @@ import { Space_Grotesk, Montserrat } from 'next/font/google'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
+import { siteUrl } from '@/lib/metadata'
 import './globals.css'
 
 const spaceGrotesk = Space_Grotesk({
@@ -20,7 +21,7 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://klimate.consulting'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Klimate Consulting — Research-Based Sustainability Solutions',
     template: '%s | Klimate Consulting',
@@ -50,7 +51,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: 'Klimate Consulting',
-  url: 'https://klimate.consulting',
+  url: siteUrl,
   email: 'hello@klimateconsulting.com',
   description:
     'Applied sustainability research and consulting for agriculture, energy, water, and food systems.',

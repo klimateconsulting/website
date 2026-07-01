@@ -6,6 +6,7 @@ import Button from '@/components/shared/Button'
 
 export const metadata: Metadata = {
   title: 'Services — Klimate Consulting',
+  alternates: { canonical: '/services/' },
   description:
     'Technical analysis, applied research, data analytics, and policy guidance for agriculture, energy, water, and food systems.',
 }

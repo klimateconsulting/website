@@ -5,6 +5,7 @@ import Button from '@/components/shared/Button'
 
 export const metadata: Metadata = {
   title: 'Water Resource Management Consulting | Klimate Consulting',
+  alternates: { canonical: '/services/water/' },
   description:
     'Modernizing water management for a climate-changed world. Klimate Consulting works with utilities, agencies, and NGOs on data-driven water strategy.',
 }

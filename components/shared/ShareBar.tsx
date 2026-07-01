@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { LinkIcon, Check } from 'lucide-react'
+import { siteUrl } from '@/lib/metadata'
 
 function LinkedinIcon({ className }: { className?: string }) {
   return (
@@ -21,7 +22,7 @@ function XIcon({ className }: { className?: string }) {
 
 export default function ShareBar({ title, slug }: { title: string; slug: string }) {
   const [copied, setCopied] = useState(false)
-  const url = `https://klimate.consulting/insights/${slug}/`
+  const url = `${siteUrl}/insights/${slug}/`
 
   const handleCopyLink = async () => {
     try {

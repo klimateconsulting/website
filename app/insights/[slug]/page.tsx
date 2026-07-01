@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllInsights, getInsightBySlug } from '@/lib/mdx'
+import { siteUrl } from '@/lib/metadata'
 import TagBadge from '@/components/shared/TagBadge'
 import ReadingProgress from '@/components/shared/ReadingProgress'
 import InsightCard from '@/components/shared/InsightCard'
@@ -70,6 +71,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
     return {
       title: seoTitles[slug] || frontmatter.title,
       description: seoDescriptions[slug] || frontmatter.description,
+      alternates: { canonical: `/insights/${slug}/` },
     }
   })
 }
@@ -155,7 +157,7 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
     publisher: {
       '@type': 'Organization',
       name: 'Klimate Consulting',
-      url: 'https://klimate.consulting',
+      url: siteUrl,
     },
   }
 

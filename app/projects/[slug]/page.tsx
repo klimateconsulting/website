@@ -16,6 +16,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
     return {
       title: `${frontmatter.title} | Klimate Consulting`,
       description: frontmatter.description,
+      alternates: { canonical: `/projects/${slug}/` },
     }
   })
 }
