@@ -1,104 +1,74 @@
-'use client'
-
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import Kicker from '@/components/shared/Kicker'
+import { SECTOR_ORDER, SECTORS } from '@/lib/sectors'
 
-const sectors = [
-  {
-    name: 'Agriculture',
-    icon: '/icons/agriculture-color.png',
-    iconWhite: '/icons/agriculture-white.png',
-    href: '/services/agriculture/',
-    color: 'border-kc-green',
-    description:
-      'Our soils are degrading. Agriculture is both a major emissions source and our greatest opportunity to sequester carbon. We work with farming operations, agtech companies, and food companies to reduce their footprint and transition agricultural land into the world\'s largest carbon sink.',
-  },
-  {
-    name: 'Energy',
-    icon: '/icons/energy-color.png',
-    iconWhite: '/icons/energy-white.png',
-    href: '/services/energy/',
-    color: 'border-kc-yellow',
-    description:
-      'The energy transition is accelerating — but climate change is now threatening energy security itself. We develop microgrid solutions and conduct energy management R&D to build a more resilient energy future.',
-  },
-  {
-    name: 'Water',
-    icon: '/icons/water-color.png',
-    iconWhite: '/icons/water-white.png',
-    href: '/services/water/',
-    color: 'border-kc-blue',
-    description:
-      'Most of the world\'s population lives in water-stressed regions. California manages its water with laws from the 1800s. We research how to modernize water management for the 21st century.',
-  },
-  {
-    name: 'Food Systems',
-    icon: '/icons/food-color.png',
-    iconWhite: '/icons/food-white.png',
-    href: '/services/food-systems/',
-    color: 'border-kc-brown',
-    description:
-      'Our food system is the single largest source of greenhouse gas emissions on Earth. We help clients understand and account for food-related emissions from farm to fork, enabling smarter Scope 3 reporting.',
-  },
-]
+// Short, editable descriptions per focus area (homepage index rows).
+const DESCRIPTIONS: Record<string, string> = {
+  water:
+    'Most of the world lives in water-stressed regions. We research how to modernize water management for the 21st century.',
+  energy:
+    'Energy systems are under new pressure. We develop microgrid solutions and energy-management R&D for a resilient, efficient grid.',
+  agriculture:
+    'From farm operations to agtech, we analyze how agriculture uses land, water, and energy — and where the biggest efficiency gains hide.',
+  'food-systems':
+    'We trace impacts through the food value chain from farm to fork — giving clients the data for smarter Scope 3 reporting and sourcing decisions.',
+}
 
 export default function FocusAreas() {
   return (
-    <section className="py-20 md:py-28 bg-kc-bg-grey dark:bg-kc-dark-alt">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
-        >
-          <h2 className="font-heading text-3xl md:text-4xl font-bold text-kc-dark dark:text-white mb-4">
-            Our Focus Areas
-          </h2>
-        </motion.div>
+    <section id="focus" className="bg-kc-bg">
+      <div className="mx-auto max-w-[1240px] px-8 pt-[110px] pb-[100px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[4fr_8fr] gap-8 lg:gap-[72px] mb-16">
+          <div>
+            <Kicker className="mb-4">Where we go deep</Kicker>
+            <h2 className="font-heading text-[40px] leading-[1.12] font-semibold tracking-[-0.02em] text-kc-dark m-0">
+              Depth where
+              <br />
+              it matters.
+            </h2>
+          </div>
+          <p className="font-body text-base leading-[1.8] text-kc-text-lead m-0 self-end max-w-[560px]">
+            Our core domains are water, energy, agriculture, and food systems —
+            but the method travels. If it needs rigorous analysis, we can
+            research it.
+          </p>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {sectors.map((sector, i) => (
-            <motion.div
-              key={sector.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
+        <div className="flex flex-col border-t border-kc-divider">
+          {SECTOR_ORDER.map((key, i) => {
+            const s = SECTORS[key]
+            return (
               <Link
-                href={sector.href}
-                className={`block bg-white dark:bg-kc-dark-card rounded-xl p-8 shadow-sm border border-transparent dark:border-white/10 hover:-translate-y-1 hover:shadow-lg hover:border-l-4 ${sector.color} transition-all duration-200 h-full`}
+                key={key}
+                href={`/services/${key}/`}
+                className="sector-row group grid grid-cols-[auto_auto_1fr] md:grid-cols-[90px_56px_240px_1fr_120px] gap-x-5 md:gap-x-7 gap-y-2 items-center px-3 md:px-5 py-8 border-b border-kc-divider border-l-[3px] border-l-transparent transition-colors"
+                style={{ ['--tint' as string]: s.tint, ['--accent' as string]: s.color }}
               >
-                {/* Source: klimate-owned */}
+                <span className="font-heading text-[15px] font-medium text-kc-text-muted">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <Image
-                  src={sector.icon}
+                  src={s.icon}
                   alt=""
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 mb-4 object-contain block dark:hidden"
+                  width={40}
+                  height={40}
+                  className="w-10 h-10 object-contain"
                 />
-                <Image
-                  src={sector.iconWhite}
-                  alt=""
-                  width={48}
-                  height={48}
-                  className="w-12 h-12 mb-4 object-contain hidden dark:block"
-                />
-                <h3 className="font-heading text-xl font-bold text-kc-dark dark:text-white mb-3">
-                  {sector.name}
+                <h3 className="font-heading text-[24px] font-semibold tracking-[-0.01em] text-kc-dark m-0 col-span-3 md:col-span-1 order-last md:order-none">
+                  {s.label}
                 </h3>
-                <p className="font-body text-sm text-kc-dark/70 dark:text-gray-300 leading-relaxed mb-4">
-                  {sector.description}
+                <p className="font-body text-sm leading-[1.7] text-kc-text-secondary m-0 max-w-[520px] col-span-3 md:col-span-1">
+                  {DESCRIPTIONS[key]}
                 </p>
-                <span className="text-kc-blue dark:text-kc-light-blue text-sm font-semibold">
-                  Learn more &rarr;
+                <span
+                  className="hidden md:block font-body text-[13px] font-semibold text-kc-blue justify-self-end"
+                >
+                  Learn more →
                 </span>
               </Link>
-            </motion.div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </section>

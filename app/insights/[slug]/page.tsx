@@ -4,11 +4,13 @@ import Link from 'next/link'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getAllInsights, getInsightBySlug } from '@/lib/mdx'
 import { siteUrl } from '@/lib/metadata'
-import TagBadge from '@/components/shared/TagBadge'
+import { getSector } from '@/lib/sectors'
 import ReadingProgress from '@/components/shared/ReadingProgress'
-import InsightCard from '@/components/shared/InsightCard'
 import TableOfContents from '@/components/shared/TableOfContents'
 import ShareBar from '@/components/shared/ShareBar'
+import AuthorBio from '@/components/blog/AuthorBio'
+import KeepReading from '@/components/blog/KeepReading'
+import NewsletterPanel from '@/components/blog/NewsletterPanel'
 import Callout from '@/components/mdx/Callout'
 import Stat from '@/components/mdx/Stat'
 import PullQuote from '@/components/mdx/PullQuote'
@@ -16,15 +18,38 @@ import ChartEmbed from '@/components/mdx/ChartEmbed'
 
 const mdxComponents = { Callout, Stat, PullQuote, ChartEmbed }
 
-const teamMembers: Record<string, { photo: string; bio: string } | null> = {
+interface TeamMember {
+  photo: string
+  role: string
+  bio: string
+}
+
+const teamMembers: Record<string, TeamMember> = {
   'Arian Aghajanzadeh': {
     photo: '/images/team/arian-aghajanzadeh.jpg',
-    bio: 'Founder of Klimate Consulting. 10 years of experience in energy, water, and agriculture sustainability.',
+    role: 'Founder, Klimate Consulting',
+    bio: 'Recognized subject matter expert in energy and water use in irrigated agriculture, with 10 years working with industrial, agricultural, water, and energy stakeholders.',
   },
   'Darren Sholes': {
     photo: '/images/team/darren-sholes.jpg',
+    role: 'Senior Consultant, Klimate Consulting',
     bio: 'Senior Consultant at Klimate Consulting. Expertise in advanced manufacturing, renewable energy, and data science.',
   },
+}
+
+// Label that also covers the legacy "ecosystem" tag (not a getSector key).
+function sectorLabel(sector: string) {
+  if (sector === 'ecosystem') return 'Ecosystems'
+  return getSector(sector).label
+}
+
+function formatLongDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
 }
 
 export function generateStaticParams() {
@@ -161,6 +186,8 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
     },
   }
 
+  const authorRole = authorInfo?.role ?? 'Klimate Consulting'
+
   return (
     <>
       <ReadingProgress />
@@ -174,146 +201,135 @@ export default async function InsightPage({ params }: { params: Promise<{ slug: 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
-      <div className="pt-20">
-        <article className="py-12 md:py-20">
-          {/* Breadcrumb + Header — full width centered */}
-          <div className="max-w-[1200px] mx-auto px-6">
-            <nav className="text-sm font-body text-kc-text-secondary dark:text-gray-300 mb-8">
-              <Link href="/insights/" className="hover:text-kc-blue dark:hover:text-kc-light-blue">
+      <div className="bg-kc-bg pt-20">
+        {/* ============ ARTICLE HEADER ============ */}
+        <section className="bg-kc-bg">
+          <div className="mx-auto max-w-[860px] px-8 pt-[72px]">
+            <nav className="mb-7 flex items-center gap-2 font-body text-[12.5px]">
+              <Link
+                href="/insights/"
+                className="font-semibold text-kc-text-muted hover:text-kc-blue"
+              >
                 Insights
               </Link>
-              <span className="mx-2">/</span>
-              <span className="text-kc-dark dark:text-white">{frontmatter.title}</span>
+              <span className="text-kc-light-blue">/</span>
+              <span className="font-semibold text-kc-blue">
+                {sectorLabel(frontmatter.sector)}
+              </span>
             </nav>
 
-            <div className="max-w-[800px] mb-8">
-              <div className="flex items-center flex-wrap gap-2 mb-4">
-                {postTags.map((s) => (
-                  <TagBadge key={s} sector={s} />
-                ))}
-                <span className="text-sm text-kc-text-secondary dark:text-gray-300">
-                  {frontmatter.readingTime} min read
-                </span>
-              </div>
-              <h1 className="font-heading text-3xl md:text-4xl font-bold text-kc-dark dark:text-white mb-4 leading-tight">
-                {frontmatter.title}
-              </h1>
-              <div className="flex items-center gap-4 text-sm text-kc-text-secondary dark:text-gray-300">
-                <span>{frontmatter.author}</span>
-                <span>&middot;</span>
-                <time dateTime={frontmatter.date}>
-                  {new Date(frontmatter.date).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    timeZone: 'UTC',
-                  })}
-                </time>
-              </div>
-            </div>
+            <h1 className="m-0 mb-[22px] font-heading text-[34px] font-semibold leading-[1.12] tracking-[-0.02em] text-kc-dark md:text-[46px]">
+              {frontmatter.title}
+            </h1>
+            <p className="m-0 mb-8 font-body text-[18px] leading-[1.7] text-kc-text-lead">
+              {frontmatter.description}
+            </p>
 
-            {/* Hero image */}
-            {frontmatter.image && (
-              <div className="max-w-[800px] aspect-[16/9] relative rounded-xl overflow-hidden mb-10">
+            {/* Meta bar between hairlines */}
+            <div className="flex flex-col gap-4 border-y border-kc-border py-5 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-3.5">
+                {authorInfo ? (
+                  /* Source: klimate-owned */
+                  <Image
+                    src={authorInfo.photo}
+                    alt={frontmatter.author}
+                    width={42}
+                    height={42}
+                    className="h-[42px] w-[42px] rounded-full object-cover"
+                  />
+                ) : (
+                  <div className="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-kc-light-blue font-heading text-sm font-semibold text-kc-blue">
+                    {frontmatter.author.charAt(0)}
+                  </div>
+                )}
+                <div>
+                  <div className="font-heading text-[14px] font-semibold text-kc-dark">
+                    {frontmatter.author}
+                  </div>
+                  <div className="font-body text-[12px] text-kc-text-muted">
+                    {formatLongDate(frontmatter.date)} · {frontmatter.readingTime} min read
+                  </div>
+                </div>
+              </div>
+              <ShareBar title={frontmatter.title} slug={slug} />
+            </div>
+          </div>
+        </section>
+
+        {/* ============ HERO IMAGE ============ */}
+        {frontmatter.image && (
+          <section className="bg-kc-bg">
+            <div className="mx-auto max-w-[1000px] px-8 pt-11">
+              <div className="overflow-hidden rounded-lg shadow-[0_24px_60px_rgba(15,76,129,0.12)]">
                 {/* Source: klimate-owned */}
                 <Image
                   src={frontmatter.image}
                   alt={frontmatter.title}
-                  fill
-                  className="object-cover"
+                  width={1000}
+                  height={440}
+                  className="h-auto max-h-[440px] w-full object-cover"
+                />
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* ============ ARTICLE BODY ============ */}
+        <section className="bg-kc-bg">
+          <div className="mx-auto flex max-w-[1240px] justify-center gap-12 px-8 pb-10 pt-16 lg:gap-20">
+            {/* TOC */}
+            {headings.length > 0 && (
+              <aside className="hidden w-[220px] shrink-0 lg:block">
+                <div className="sticky top-[108px]">
+                  <TableOfContents headings={headings} />
+                </div>
+              </aside>
+            )}
+
+            {/* Prose */}
+            <article
+              className="prose w-full min-w-0 max-w-[640px] font-body
+                [&_h2]:mb-5 [&_h2]:mt-12 [&_h2]:font-heading [&_h2]:text-[28px] [&_h2]:font-semibold [&_h2]:tracking-[-0.015em] [&_h2]:text-kc-dark
+                [&_h3]:mb-4 [&_h3]:mt-10 [&_h3]:font-heading [&_h3]:text-[21px] [&_h3]:font-semibold [&_h3]:text-kc-dark
+                [&_p]:mb-6 [&_p]:text-[16px] [&_p]:leading-[1.9] [&_p]:text-kc-text-body
+                [&_li]:text-[16px] [&_li]:leading-[1.9] [&_li]:text-kc-text-body
+                [&_a]:font-semibold [&_a]:text-kc-blue"
+            >
+              <MDXRemote source={content} components={mdxComponents} />
+            </article>
+          </div>
+        </section>
+
+        {/* ============ AUTHOR + KEEP READING + NEWSLETTER ============ */}
+        <section className="bg-kc-bg">
+          <div className="mx-auto max-w-[864px] px-8 pb-24 pt-6">
+            <div className="mb-16">
+              <AuthorBio
+                name={frontmatter.author}
+                role={authorRole}
+                bio={
+                  authorInfo?.bio ??
+                  `${frontmatter.author} writes for Klimate Consulting on water, energy, and agriculture.`
+                }
+                photo={authorInfo?.photo}
+              />
+            </div>
+
+            {relatedPosts.length > 0 && (
+              <div className="mb-16">
+                <KeepReading
+                  items={relatedPosts.map((post) => ({
+                    href: `/insights/${post.slug}/`,
+                    date: post.frontmatter.date,
+                    title: post.frontmatter.title,
+                  }))}
                 />
               </div>
             )}
+
+            <NewsletterPanel variant="panel" />
           </div>
-
-          {/* Content + TOC sidebar */}
-          <div className="max-w-[1200px] mx-auto px-6">
-            <div className="flex gap-12">
-              {/* Article content */}
-              <div className="max-w-[800px] min-w-0 flex-1">
-                <div className="prose prose-lg max-w-none">
-                  <MDXRemote source={content} components={mdxComponents} />
-                </div>
-
-                {/* Share bar */}
-                <div className="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
-                  <ShareBar title={frontmatter.title} slug={slug} />
-                </div>
-
-                {/* Author card */}
-                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-800">
-                  {authorInfo ? (
-                    <div className="flex items-start gap-4">
-                      {/* Source: klimate-owned */}
-                      <Image
-                        src={authorInfo.photo}
-                        alt={frontmatter.author}
-                        width={64}
-                        height={64}
-                        className="w-16 h-16 rounded-full object-cover"
-                      />
-                      <div>
-                        <h4 className="font-heading font-bold text-kc-dark dark:text-white">
-                          {frontmatter.author}
-                        </h4>
-                        <p className="text-sm text-kc-text-secondary dark:text-gray-300 mt-1">
-                          {authorInfo.bio}
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="text-sm text-kc-text-secondary dark:text-gray-300">
-                      Written by {frontmatter.author} &middot;{' '}
-                      {new Date(frontmatter.date).toLocaleDateString('en-US', {
-                        month: 'long',
-                        day: 'numeric',
-                        year: 'numeric',
-                        timeZone: 'UTC',
-                      })}
-                    </p>
-                  )}
-                </div>
-
-                {/* Related posts */}
-                {relatedPosts.length > 0 && (
-                  <div className="mt-16">
-                    <h3 className="font-heading text-2xl font-bold text-kc-dark dark:text-white mb-6">
-                      Related Articles
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {relatedPosts.map((post) => (
-                        <InsightCard
-                          key={post.slug}
-                          slug={post.slug}
-                          {...post.frontmatter}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Back link */}
-                <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
-                  <Link
-                    href="/insights/"
-                    className="text-kc-blue dark:text-kc-light-blue font-semibold hover:underline"
-                  >
-                    &larr; All Insights
-                  </Link>
-                </div>
-              </div>
-
-              {/* TOC sidebar — desktop only */}
-              {headings.length > 0 && (
-                <aside className="hidden xl:block w-60 flex-shrink-0">
-                  <div className="sticky top-24">
-                    <TableOfContents headings={headings} />
-                  </div>
-                </aside>
-              )}
-            </div>
-          </div>
-        </article>
+        </section>
       </div>
     </>
   )

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import SectionHeader from '@/components/shared/SectionHeader'
-import Button from '@/components/shared/Button'
+import CTABand from '@/components/shared/CTABand'
+import FadeIn from '@/components/shared/FadeIn'
+import Kicker from '@/components/shared/Kicker'
+import { SECTOR_ORDER, getSector } from '@/lib/sectors'
 
 export const metadata: Metadata = {
   title: 'Services — Klimate Consulting',
@@ -11,7 +13,17 @@ export const metadata: Metadata = {
     'Technical analysis, applied research, data analytics, and policy guidance for agriculture, energy, water, and food systems.',
 }
 
-const serviceTypes = [
+// Editable copy ---------------------------------------------------------------
+
+const HEADER = {
+  h1a: 'Rigorous analysis,',
+  h1b: 'however you need it.',
+  intro:
+    'From applied research and technical reports to data analysis and policy guidance — we deliver work you can defend, in the format your stakeholders need.',
+}
+
+/** The eight service types clients engage us for (existing names, numbered 01–08). */
+const ENGAGEMENTS = [
   'Technical Analysis & Report Writing',
   'Applied Research',
   'Data Analysis & Visualization',
@@ -22,142 +34,150 @@ const serviceTypes = [
   'Policy Analysis',
 ]
 
-const sectors = [
-  {
-    name: 'Agriculture',
-    icon: '/icons/agriculture-color.png',
-    href: '/services/agriculture/',
-    color: 'border-l-kc-green',
-    problem:
-      'Soil degradation, water overuse, agriculture as emissions source and carbon sink opportunity.',
-    solution:
-      'Farm production analytics, crop data analysis, agricultural census insights, carbon sequestration research.',
-  },
-  {
-    name: 'Energy',
-    icon: '/icons/energy-color.png',
-    href: '/services/energy/',
-    color: 'border-l-kc-yellow',
-    problem: 'Grid stress, climate threats to energy security, transition needs.',
-    solution:
-      'Microgrid solutions, energy management R&D, industrial energy efficiency, DOE program support.',
-  },
-  {
-    name: 'Water',
-    icon: '/icons/water-color.png',
+/** Sector deep-dive rows. Challenge/what-we-do are the concise hub summaries. */
+const SECTOR_ROWS: Record<
+  string,
+  { href: string; challenge: string; whatWeDo: string }
+> = {
+  water: {
     href: '/services/water/',
-    color: 'border-l-kc-blue',
-    problem:
+    challenge:
       "Most of the world's population lives in water-stressed regions. California manages water with laws from the 1800s.",
-    solution:
+    whatWeDo:
       'Water management R&D, infrastructure modernization research, water data analysis.',
   },
-  {
-    name: 'Food Systems',
-    icon: '/icons/food-color.png',
+  energy: {
+    href: '/services/energy/',
+    challenge:
+      'Grid stress, rising demand, and new threats to energy security and reliability.',
+    whatWeDo:
+      'Microgrid solutions, energy management R&D, industrial energy efficiency, DOE program support.',
+  },
+  agriculture: {
+    href: '/services/agriculture/',
+    challenge:
+      'Soil degradation, water overuse, and pressure to do more with less land and inputs.',
+    whatWeDo:
+      'Farm production analytics, crop data analysis, agricultural census insights, sequestration research.',
+  },
+  'food-systems': {
     href: '/services/food-systems/',
-    color: 'border-l-kc-brown',
-    problem: 'Largest GHG emitter globally, complex supply chain, Scope 3 challenges.',
-    solution:
+    challenge:
+      'A complex global supply chain and mounting Scope 3 reporting demands.',
+    whatWeDo:
       'Emission accounting, supply chain analysis, carbon insetting, LCA, food system data.',
   },
-]
+}
+
+// -----------------------------------------------------------------------------
 
 export default function ServicesPage() {
   return (
-    <div className="pt-20">
-      {/* Header */}
-      <section className="py-20 md:py-28 bg-kc-dark text-white">
-        <div className="max-w-[1200px] mx-auto px-6 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-            How We Help Our Clients
-          </h1>
-          <p className="font-body text-lg text-gray-300 max-w-2xl mx-auto">
-            Klimate Consulting offers professional services focused on agriculture, energy, water,
-            and our food system. The ultimate goal is to conserve resources and reduce greenhouse gas
-            emissions.
-          </p>
-        </div>
-      </section>
-
-      {/* Service types */}
-      <section className="py-16 md:py-20 bg-white dark:bg-kc-dark">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-kc-dark dark:text-white mb-8 text-center">
-            Services We Offer
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {serviceTypes.map((service) => (
-              <div
-                key={service}
-                className="p-4 bg-kc-bg-grey dark:bg-kc-dark-card rounded-lg text-center"
-              >
-                <span className="font-body text-sm font-semibold text-kc-dark dark:text-white">
-                  {service}
-                </span>
-              </div>
-            ))}
+    <div>
+      {/* ============ PAGE HEADER ============ */}
+      <section className="border-b border-kc-border bg-kc-bg">
+        <div className="mx-auto max-w-[1240px] px-8 pt-[88px] pb-[72px]">
+          <Kicker className="mb-6">Services</Kicker>
+          <div className="grid items-end gap-10 lg:grid-cols-[7fr_5fr] lg:gap-[72px]">
+            <h1 className="m-0 font-heading text-[40px] font-semibold leading-[1.08] tracking-[-0.025em] text-kc-dark md:text-[56px]">
+              {HEADER.h1a}
+              <br />
+              {HEADER.h1b}
+            </h1>
+            <p className="m-0 font-body text-base leading-[1.8] text-kc-text-lead">
+              {HEADER.intro}
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Sector deep-dives */}
-      <section className="py-16 md:py-20 bg-kc-bg-grey dark:bg-kc-dark-alt">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <SectionHeader title="Our Focus Areas" />
-          <div className="space-y-8">
-            {sectors.map((sector) => (
-              <div
-                key={sector.name}
-                className={`bg-white dark:bg-kc-dark-card rounded-xl p-8 border-l-4 ${sector.color} shadow-sm`}
-              >
-                <div className="flex items-start gap-6">
-                  {/* Source: klimate-owned */}
-                  <Image
-                    src={sector.icon}
-                    alt=""
-                    width={48}
-                    height={48}
-                    className="w-12 h-12 flex-shrink-0 mt-1 object-contain"
-                  />
-                  <div className="flex-1">
-                    <h3 className="font-heading text-xl font-bold text-kc-dark dark:text-white mb-3">
-                      {sector.name}
-                    </h3>
-                    <p className="font-body text-sm text-kc-text-secondary dark:text-gray-300 mb-2">
-                      <strong>The challenge:</strong> {sector.problem}
-                    </p>
-                    <p className="font-body text-sm text-kc-text-secondary dark:text-gray-300 mb-4">
-                      <strong>What we do:</strong> {sector.solution}
-                    </p>
-                    <Link
-                      href={sector.href}
-                      className="text-kc-blue dark:text-kc-light-blue text-sm font-semibold hover:underline"
-                    >
-                      Learn more &rarr;
-                    </Link>
+      {/* ============ WHAT WE DELIVER ============ */}
+      <section className="bg-kc-bg">
+        <div className="mx-auto max-w-[1240px] px-8 py-24">
+          <Kicker className="mb-4">What we deliver</Kicker>
+          <h2 className="m-0 mb-12 font-heading text-[32px] font-semibold tracking-[-0.02em] text-kc-dark md:text-[36px]">
+            Eight ways to engage us
+          </h2>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {ENGAGEMENTS.map((name, i) => (
+              <FadeIn as="div" key={name} delay={(i % 4) * 0.05}>
+                <div className="h-full rounded-md border border-kc-border bg-white px-[26px] py-7 transition-colors duration-200 hover:border-kc-blue">
+                  <div className="mb-[14px] font-heading text-[13px] font-medium text-kc-text-muted">
+                    {String(i + 1).padStart(2, '0')}
+                  </div>
+                  <div className="font-heading text-[17px] font-semibold leading-[1.35] text-kc-dark">
+                    {name}
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 md:py-20 bg-kc-blue text-white text-center">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <h2 className="font-heading text-3xl font-bold mb-4">
-            Have a project in mind?
+      {/* ============ SECTOR DEEP-DIVES ============ */}
+      <section className="bg-kc-bg-grey">
+        <div className="mx-auto max-w-[1240px] px-8 py-24">
+          <Kicker className="mb-4">Where we go deep</Kicker>
+          <h2 className="m-0 mb-12 font-heading text-[32px] font-semibold tracking-[-0.02em] text-kc-dark md:text-[36px]">
+            Our focus areas
           </h2>
-          <p className="font-body text-lg text-blue-100 mb-8">
-            Let&apos;s discuss how Klimate can support your sustainability goals.
-          </p>
-          <Button href="/contact/" variant="white">
-            Get in Touch
-          </Button>
+
+          <div className="flex flex-col gap-6">
+            {SECTOR_ORDER.map((key) => {
+              const sector = getSector(key)
+              const row = SECTOR_ROWS[key]
+              return (
+                <FadeIn as="div" key={key}>
+                  <Link
+                    href={row.href}
+                    className="group grid grid-cols-[56px_1fr] items-start gap-6 rounded-md border border-kc-border bg-white p-9 transition-shadow duration-200 hover:shadow-[0_16px_40px_rgba(22,33,35,0.09)] lg:grid-cols-[56px_220px_1fr_1fr_100px] lg:gap-9"
+                    style={{ borderLeft: `3px solid ${sector.color}` }}
+                  >
+                    {/* Source: klimate-owned */}
+                    <Image
+                      src={sector.icon}
+                      alt=""
+                      width={44}
+                      height={44}
+                      className="h-11 w-11 object-contain"
+                    />
+                    <h3 className="m-0 font-heading text-[24px] font-semibold tracking-[-0.01em] text-kc-dark">
+                      {sector.label}
+                    </h3>
+                    <div>
+                      <div className="mb-2 font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted">
+                        The challenge
+                      </div>
+                      <p className="m-0 font-body text-[13.5px] leading-[1.7] text-kc-text-secondary">
+                        {row.challenge}
+                      </p>
+                    </div>
+                    <div>
+                      <div className="mb-2 font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted">
+                        What we do
+                      </div>
+                      <p className="m-0 font-body text-[13.5px] leading-[1.7] text-kc-text-secondary">
+                        {row.whatWeDo}
+                      </p>
+                    </div>
+                    <span className="font-body text-[13px] font-semibold text-kc-blue lg:self-center lg:justify-self-end">
+                      More →
+                    </span>
+                  </Link>
+                </FadeIn>
+              )
+            })}
+          </div>
         </div>
       </section>
+
+      {/* ============ CTA ============ */}
+      <CTABand
+        heading="Have a project in mind?"
+        subline="Tell us what you're trying to answer — we'll scope the fastest rigorous path to it."
+        buttonLabel="Get in touch"
+      />
     </div>
   )
 }

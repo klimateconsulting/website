@@ -2,86 +2,103 @@
 @plugin "@tailwindcss/typography";
 
 @theme inline {
-  /* Brand Colors */
-  --color-kc-blue: #0F4C81;
-  --color-kc-blue-dark: #0a3a66;
-  --color-kc-green: #70A288;
-  --color-kc-yellow: #FFAD05;
-  --color-kc-brown: #220C10;
-  --color-kc-dark: #162123;
-  --color-kc-bg-blue: #D3EBFB;
-  --color-kc-bg-grey: #F3F5F8;
-  --color-kc-light-blue: #C3D2DF;
+  /* ---- Brand accent colors (sector palette) ---- */
+  --color-kc-blue: #0F4C81; /* primary · Water */
+  --color-kc-blue-dark: #0a3a66; /* button hover, footer bg, dashboard header */
+  --color-kc-green: #70A288; /* Agriculture */
+  --color-kc-yellow: #FFAD05; /* Energy · CTA button · kicker dashes */
+  --color-kc-yellow-hover: #FFC145; /* CTA button hover */
+  --color-kc-yellow-text: #d18d00; /* yellow used as text (contrast-safe) */
+  --color-kc-brown: #220C10; /* Food Systems */
+
+  /* ---- Surfaces ---- */
+  --color-kc-bg: #FDFDFB; /* warm off-white page background */
+  --color-kc-bg-grey: #F3F5F8; /* alternating sections · dashboard bg */
+  --color-kc-bg-blue: #D3EBFB; /* Data Labs teaser / callout panels */
+  --color-kc-card: #FFFFFF; /* cards, panels */
+  --color-kc-border: #E7EAEE; /* card borders, hairlines */
+  --color-kc-divider: #DDE3E8; /* list-row borders, input borders */
+  --color-kc-light-blue: #C3D2DF; /* outline buttons, footer light text */
+
+  /* ---- Program / status tint chips ---- */
   --color-kc-light-green: #DBE8E1;
   --color-kc-light-yellow: #FFEBC0;
   --color-kc-light-brown: #EAE4E5;
-  --color-kc-text-secondary: #5a6a6e;
 
-  /* Fonts */
+  /* ---- Text ---- */
+  --color-kc-dark: #162123; /* headings, body primary */
+  --color-kc-text-body: #2c3a3e; /* article body */
+  --color-kc-text-lead: #45565a; /* lead paragraphs */
+  --color-kc-text-secondary: #5a6a6e; /* descriptions */
+  --color-kc-text-muted: #8a979b; /* metadata, captions */
+
+  /* ---- Fonts ---- */
   --font-heading: var(--font-space-grotesk), sans-serif;
   --font-body: var(--font-montserrat), sans-serif;
 
-  /* Max Width */
-  --container-content: 1200px;
+  /* ---- Layout ---- */
+  --container-content: 1240px;
 }
 
-/* Base styles */
+/* Base styles — light, editorial, research-grade */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--color-kc-dark);
+  background-color: var(--color-kc-bg);
+  -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-/* Prose / typography overrides for MDX content */
+::selection {
+  background: var(--color-kc-bg-blue);
+}
+
+/* Sector index rows (focus areas, service deep-dives): tinted bg + accent
+   left-rule on hover. Colors passed per-row via --tint / --accent inline vars. */
+.sector-row:hover {
+  background: var(--tint);
+  border-left-color: var(--accent);
+}
+
+/* Prose / typography overrides for MDX article body */
 .prose {
-  --tw-prose-body: var(--color-kc-dark);
+  --tw-prose-body: var(--color-kc-text-body);
   --tw-prose-headings: var(--color-kc-dark);
   --tw-prose-links: var(--color-kc-blue);
   --tw-prose-bold: var(--color-kc-dark);
+  --tw-prose-quotes: var(--color-kc-dark);
+  --tw-prose-quote-borders: var(--color-kc-yellow);
+  --tw-prose-counters: var(--color-kc-text-secondary);
+  --tw-prose-bullets: var(--color-kc-light-blue);
+  --tw-prose-hr: var(--color-kc-border);
 }
 
 .prose h1,
 .prose h2,
 .prose h3 {
   font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
-/* Dark mode base */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--color-kc-dark);
-    color: #ffffff;
-  }
-
-  .prose {
-    --tw-prose-body: #e5e7eb;
-    --tw-prose-headings: #ffffff;
-    --tw-prose-links: #93c5fd;
-    --tw-prose-bold: #ffffff;
-    --tw-prose-counters: #d1d5db;
-    --tw-prose-bullets: #d1d5db;
-    --tw-prose-hr: #374151;
-    --tw-prose-quotes: #e5e7eb;
-    --tw-prose-quote-borders: var(--color-kc-blue);
-    --tw-prose-code: #ffffff;
-    --tw-prose-pre-code: #e5e7eb;
-    --tw-prose-pre-bg: #1f2937;
-  }
-}
-
-/* Safety net: ensure content is never permanently hidden for reduced-motion users */
+/* Safety net: content is never permanently hidden for reduced-motion users */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     opacity: 1 !important;
     transform: none !important;
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
-}
-
-/* Dark mode alternating section backgrounds for visual distinction */
-@theme inline {
-  --color-kc-dark-alt: #1e2d30;
-  --color-kc-dark-card: #1a2628;
 }

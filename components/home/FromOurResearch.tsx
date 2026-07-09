@@ -1,38 +1,40 @@
 import Link from 'next/link'
-import InsightCard from '@/components/shared/InsightCard'
-import SectionHeader from '@/components/shared/SectionHeader'
-import { getInsightBySlug } from '@/lib/mdx'
-
-// Hand-picked to span sectors (water, agriculture, ecosystem). Data is pulled
-// from each post's frontmatter so titles/images stay in sync.
-const featuredSlugs = [
-  'price-of-water-california',
-  'decarbonizing-agriculture-part-1',
-  'sargassum-golden-tide',
-]
+import Kicker from '@/components/shared/Kicker'
+import JournalRow from '@/components/shared/JournalRow'
+import { getAllInsights } from '@/lib/mdx'
 
 export default function FromOurResearch() {
-  const posts = featuredSlugs.map((slug) => ({ slug, ...getInsightBySlug(slug).frontmatter }))
+  const posts = getAllInsights().slice(0, 3)
 
   return (
-    <section className="py-20 md:py-28 bg-kc-bg-grey dark:bg-kc-dark">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <SectionHeader
-          title="From Our Research"
-          subtitle="Applied, research-grade analysis of sustainability, water, and food-system challenges."
-        />
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map((post) => (
-            <InsightCard key={post.slug} {...post} />
-          ))}
-        </div>
-        <div className="text-center mt-12">
+    <section className="bg-kc-bg">
+      <div className="mx-auto max-w-[1240px] px-8 pt-5 pb-[110px]">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12">
+          <div>
+            <Kicker className="mb-4">From our research</Kicker>
+            <h2 className="font-heading text-[40px] font-semibold tracking-[-0.02em] text-kc-dark m-0">
+              Analysis you can cite
+            </h2>
+          </div>
           <Link
             href="/insights/"
-            className="text-kc-blue dark:text-kc-light-blue font-body font-semibold hover:underline"
+            className="font-body text-[13.5px] font-semibold text-kc-blue hover:text-kc-blue-dark transition-colors"
           >
-            View all insights &rarr;
+            All insights →
           </Link>
+        </div>
+
+        <div className="flex flex-col border-t border-kc-divider">
+          {posts.map((post) => (
+            <JournalRow
+              key={post.slug}
+              href={`/insights/${post.slug}/`}
+              date={post.frontmatter.date}
+              title={post.frontmatter.title}
+              description={post.frontmatter.description}
+              sector={post.frontmatter.sector}
+            />
+          ))}
         </div>
       </div>
     </section>

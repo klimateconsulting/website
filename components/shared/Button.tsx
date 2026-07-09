@@ -2,10 +2,25 @@ import Link from 'next/link'
 
 interface ButtonProps {
   href: string
-  variant?: 'primary' | 'secondary' | 'white' | 'outline-white'
+  /**
+   * primary — blue bg / white text (default)
+   * cta     — yellow bg / dark text (used in CTA bands)
+   * outline — 1.5px light-blue border / blue text
+   */
+  variant?: 'primary' | 'cta' | 'outline'
   external?: boolean
   children: React.ReactNode
   className?: string
+}
+
+const base =
+  'inline-flex items-center justify-center font-body font-semibold text-sm rounded transition-colors duration-200'
+
+const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
+  primary: 'bg-kc-blue text-white hover:bg-kc-blue-dark px-8 py-[15px]',
+  cta: 'bg-kc-yellow text-kc-dark hover:bg-kc-yellow-hover px-8 py-[15px]',
+  outline:
+    'border-[1.5px] border-kc-light-blue text-kc-blue hover:border-kc-blue px-8 py-[14px]',
 }
 
 export default function Button({
@@ -15,16 +30,6 @@ export default function Button({
   children,
   className = '',
 }: ButtonProps) {
-  const base =
-    'inline-flex items-center justify-center font-body font-semibold text-sm px-7 py-3 rounded-md transition-all duration-200 hover:scale-[1.02]'
-
-  const variants = {
-    primary: 'bg-kc-blue text-white hover:bg-kc-blue-dark',
-    secondary: 'border-2 border-kc-blue text-kc-blue hover:bg-kc-blue hover:text-white',
-    white: 'bg-white text-kc-blue hover:bg-gray-100',
-    'outline-white': 'border-2 border-white text-white hover:bg-white/10',
-  }
-
   const classes = `${base} ${variants[variant]} ${className}`
 
   if (external) {

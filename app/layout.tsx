@@ -9,25 +9,27 @@ import './globals.css'
 const spaceGrotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
   subsets: ['latin'],
-  weight: ['300', '400', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 })
 
+// NOTE: Default page copy — trivially editable. Positioning: a lean, AI-native
+// research firm delivering high-quality analysis on water, energy, agriculture.
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'Klimate Consulting — Research-Based Sustainability Solutions',
+    default: 'Klimate Consulting — A lean, AI-native research firm',
     template: '%s | Klimate Consulting',
   },
   description:
-    'Klimate Consulting helps organizations navigate sustainability complexity in agriculture, energy, water, and food systems. Science-based research and strategic guidance.',
+    'Klimate Consulting delivers high-quality analysis on water, energy, agriculture — and any question in between. National-lab rigor, AI-native speed.',
   openGraph: {
     siteName: 'Klimate Consulting',
     images: ['/og-image.png'],
@@ -82,7 +84,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-white dark:bg-kc-dark text-kc-dark dark:text-white">
+      <body className="min-h-full flex flex-col bg-kc-bg text-kc-dark">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

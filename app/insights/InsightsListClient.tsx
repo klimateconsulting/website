@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { ExternalLink } from 'lucide-react'
-import InsightCard from '@/components/shared/InsightCard'
-import SectionHeader from '@/components/shared/SectionHeader'
+import Link from 'next/link'
+import Image from 'next/image'
+import { getSector } from '@/lib/sectors'
+import JournalRow from '@/components/shared/JournalRow'
+import NewsletterPanel from '@/components/blog/NewsletterPanel'
 
 interface Post {
   slug: string
@@ -17,101 +19,138 @@ interface Post {
   image?: string
 }
 
-const sectors = ['all', 'agriculture', 'energy', 'water', 'food-systems', 'ecosystem']
-const sectorLabels: Record<string, string> = {
-  all: 'All',
-  agriculture: 'Agriculture',
-  energy: 'Energy',
-  water: 'Water',
-  'food-systems': 'Food Systems',
-  ecosystem: 'Ecosystems',
+// ---- Editable page copy ----------------------------------------------------
+const KICKER = 'Insights'
+const HEADING = 'Analysis you can cite.'
+
+// Filter tabs (client-side). Kept from the previous list behavior.
+const FILTERS = ['all', 'water', 'energy', 'agriculture', 'food-systems', 'ecosystem'] as const
+
+// Sector label that also covers the legacy "ecosystem" tag (not in getSector).
+function sectorLabel(sector: string) {
+  if (sector === 'ecosystem') return 'Ecosystems'
+  return getSector(sector).label
 }
 
-const externalPubs = [
-  {
-    title: 'What Happened To Agricultural Demand Response?',
-    source: 'Utility Dive',
-    author: 'Arian Aghajanzadeh',
-    href: 'https://www.utilitydive.com/news/what-happened-to-agricultural-demand-response/550829/',
-  },
-  {
-    title: 'Food Eco-Labels: Re-Thinking Life Cycle Assessments',
-    source: 'HowGood',
-    author: 'Klimate Consulting',
-    href: 'https://www.howgood.com/blog/food-eco-labels-re-thinking-life-cycle-assessments',
-  },
-]
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
+}
 
 export default function InsightsListClient({ posts }: { posts: Post[] }) {
-  const [filter, setFilter] = useState('all')
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]>('all')
+
+  // Latest post drives the featured card (posts arrive sorted newest-first).
+  const featured = posts[0]
+  const rest = posts.slice(1)
 
   const filtered =
     filter === 'all'
-      ? posts
-      : posts.filter((p) => p.sector === filter || p.sectors?.includes(filter))
+      ? rest
+      : rest.filter((p) => p.sector === filter || p.sectors?.includes(filter))
 
   return (
-    <div className="pt-20">
-      <section className="py-20 md:py-28 bg-white dark:bg-kc-dark">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <SectionHeader
-            title="Insights"
-            subtitle="Research-grade articles on sustainability, decarbonization, and natural resource management."
-          />
+    <div className="bg-kc-bg pt-20">
+      {/* ============ PAGE HEADER + FEATURED ============ */}
+      <section className="border-b border-kc-border bg-kc-bg">
+        <div className="mx-auto max-w-[1240px] px-8 pb-20 pt-[88px]">
+          <div className="mb-6 flex items-center gap-3">
+            <div className="h-[2px] w-7 bg-kc-blue" />
+            <span className="font-body text-[12px] font-semibold uppercase tracking-[0.18em] text-kc-text-secondary">
+              {KICKER}
+            </span>
+          </div>
+          <h1 className="m-0 mb-16 font-heading text-[42px] font-semibold leading-[1.08] tracking-[-0.025em] text-kc-dark md:text-[56px]">
+            {HEADING}
+          </h1>
 
-          {/* Filter tabs */}
-          <div className="flex flex-wrap gap-2 justify-center mb-12">
-            {sectors.map((s) => (
+          {featured && (
+            <Link
+              href={`/insights/${featured.slug}/`}
+              className="grid grid-cols-1 overflow-hidden rounded-lg border border-kc-border bg-white text-inherit transition-shadow duration-200 hover:shadow-[0_24px_56px_rgba(22,33,35,0.10)] md:grid-cols-2"
+            >
+              {featured.image && (
+                <div className="relative h-[240px] w-full md:h-[380px]">
+                  {/* Source: klimate-owned */}
+                  <Image
+                    src={featured.image}
+                    alt={featured.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div className="flex flex-col justify-center p-9 md:px-14 md:py-[52px]">
+                <div className="mb-5 flex flex-wrap items-center gap-4">
+                  <span className="rounded-full bg-kc-blue px-3 py-[5px] font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-white">
+                    Featured
+                  </span>
+                  <span className="font-body text-[12.5px] font-medium text-kc-text-muted">
+                    {formatDate(featured.date)} · {sectorLabel(featured.sector)}
+                  </span>
+                </div>
+                <h2 className="m-0 mb-[18px] font-heading text-[26px] font-semibold leading-[1.2] tracking-[-0.015em] text-kc-dark md:text-[32px]">
+                  {featured.title}
+                </h2>
+                <p className="m-0 mb-6 font-body text-[14.5px] leading-[1.75] text-kc-text-secondary">
+                  {featured.description}
+                </p>
+                <span className="font-body text-[13.5px] font-semibold text-kc-blue">
+                  Read the analysis →
+                </span>
+              </div>
+            </Link>
+          )}
+        </div>
+      </section>
+
+      {/* ============ ALL POSTS ============ */}
+      <section className="bg-kc-bg">
+        <div className="mx-auto max-w-[1240px] px-8 pb-[110px] pt-[72px]">
+          {/* Sector filter (client-side) */}
+          <div className="mb-8 flex flex-wrap gap-2">
+            {FILTERS.map((f) => (
               <button
-                key={s}
-                onClick={() => setFilter(s)}
-                className={`px-4 py-2 text-sm font-semibold font-body rounded-full transition-colors ${
-                  filter === s
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`rounded-full px-4 py-2 font-body text-[12.5px] font-semibold transition-colors ${
+                  filter === f
                     ? 'bg-kc-blue text-white'
-                    : 'bg-kc-bg-grey dark:bg-kc-dark-card text-kc-text-secondary dark:text-gray-300 hover:bg-kc-light-blue dark:hover:bg-kc-blue/20'
+                    : 'bg-kc-bg-grey text-kc-text-secondary hover:bg-kc-light-blue'
                 }`}
               >
-                {sectorLabels[s]}
+                {f === 'all' ? 'All' : sectorLabel(f)}
               </button>
             ))}
           </div>
 
-          {/* Posts grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col border-t border-kc-divider">
             {filtered.map((post) => (
-              <InsightCard key={post.slug} {...post} />
+              <JournalRow
+                key={post.slug}
+                href={`/insights/${post.slug}/`}
+                date={post.date}
+                title={post.title}
+                description={post.description}
+                sector={post.sector}
+                tagLabel={sectorLabel(post.sector)}
+              />
             ))}
-          </div>
-
-          {/* External publications */}
-          <div className="mt-20 pt-12 border-t border-gray-200 dark:border-gray-800">
-            <h3 className="font-heading text-2xl font-bold text-kc-dark dark:text-white mb-6">
-              External Publications
-            </h3>
-            <div className="space-y-4">
-              {externalPubs.map((pub) => (
-                <a
-                  key={pub.title}
-                  href={pub.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 rounded-lg bg-kc-bg-grey dark:bg-kc-dark-card hover:bg-kc-light-blue dark:hover:bg-kc-blue/10 transition-colors group"
-                >
-                  <div>
-                    <h4 className="font-heading font-bold text-kc-dark dark:text-white group-hover:text-kc-blue dark:group-hover:text-kc-light-blue transition-colors">
-                      {pub.title}
-                    </h4>
-                    <p className="text-sm text-kc-text-secondary dark:text-gray-300 mt-1">
-                      {pub.author} &middot; {pub.source}
-                    </p>
-                  </div>
-                  <ExternalLink className="w-4 h-4 text-kc-text-secondary dark:text-gray-300 flex-shrink-0 ml-4" />
-                </a>
-              ))}
-            </div>
+            {filtered.length === 0 && (
+              <p className="px-3 py-12 font-body text-[14px] text-kc-text-muted">
+                No analysis in this sector yet.
+              </p>
+            )}
           </div>
         </div>
       </section>
+
+      {/* ============ NEWSLETTER ============ */}
+      <NewsletterPanel variant="strip" />
     </div>
   )
 }

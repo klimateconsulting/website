@@ -1,18 +1,14 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, ChevronDown } from 'lucide-react'
-
-const services = [
-  { name: 'Agriculture', href: '/services/agriculture/', icon: '/icons/agriculture-color.png', iconWhite: '/icons/agriculture-white.png' },
-  { name: 'Energy', href: '/services/energy/', icon: '/icons/energy-color.png', iconWhite: '/icons/energy-white.png' },
-  { name: 'Water', href: '/services/water/', icon: '/icons/water-color.png', iconWhite: '/icons/water-white.png' },
-  { name: 'Food Systems', href: '/services/food-systems/', icon: '/icons/food-color.png', iconWhite: '/icons/food-white.png' },
-]
+import { usePathname } from 'next/navigation'
+import { Menu, X } from 'lucide-react'
+import SectorStripe from '@/components/shared/SectorStripe'
 
 const navLinks = [
+  { name: 'Services', href: '/services/' },
   { name: 'Projects', href: '/projects/' },
   { name: 'Insights', href: '/insights/' },
   { name: 'Research', href: '/research/' },
@@ -21,120 +17,57 @@ const navLinks = [
   { name: 'About', href: '/about/' },
 ]
 
+const services = [
+  { name: 'Water', href: '/services/water/', icon: '/icons/water-color.png' },
+  { name: 'Energy', href: '/services/energy/', icon: '/icons/energy-color.png' },
+  { name: 'Agriculture', href: '/services/agriculture/', icon: '/icons/agriculture-color.png' },
+  { name: 'Food Systems', href: '/services/food-systems/', icon: '/icons/food-color.png' },
+]
+
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
-  const [servicesOpen, setServicesOpen] = useState(false)
+  const pathname = usePathname() || '/'
 
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href)
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white dark:bg-[#1e2d30] border-b border-gray-100 dark:border-white/10 shadow-sm'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-16 md:h-20">
-        {/* Logo — white over hero, blue when scrolled (light), white when scrolled (dark) */}
-        <Link href="/" className="flex-shrink-0 overflow-hidden">
-          {scrolled ? (
-            <>
-              <Image
-                src="/logos/logo-blue.png"
-                alt="Klimate Consulting"
-                width={180}
-                height={40}
-                className="h-8 md:h-10 w-auto dark:hidden"
-                priority
-              />
-              <Image
-                src="/logos/logo-white.png"
-                alt="Klimate Consulting"
-                width={180}
-                height={40}
-                className="h-8 md:h-10 w-auto hidden dark:block"
-                priority
-              />
-            </>
-          ) : (
-            <Image
-              src="/logos/logo-white.png"
-              alt="Klimate Consulting"
-              width={180}
-              height={40}
-              className="h-8 md:h-10 w-auto"
-              priority
-            />
-          )}
+    <header className="sticky top-0 z-50 bg-[rgba(253,253,251,0.94)] backdrop-blur-[12px] border-b border-kc-border">
+      <div className="mx-auto max-w-[1240px] px-8 h-[76px] flex items-center justify-between gap-8">
+        <Link href="/" className="shrink-0" aria-label="Klimate Consulting home">
+          {/* Source: klimate-owned */}
+          <Image
+            src="/logos/logo-blue.png"
+            alt="Klimate Consulting"
+            width={180}
+            height={40}
+            className="h-[34px] w-auto"
+            priority
+          />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden lg:flex items-center gap-8">
-          {/* Services Dropdown */}
-          <div
-            className="relative"
-            onMouseEnter={() => setServicesOpen(true)}
-            onMouseLeave={() => setServicesOpen(false)}
-          >
-            <Link
-              href="/services/"
-              className={`flex items-center gap-1 text-sm font-semibold font-body transition-colors ${
-                scrolled
-                  ? 'text-kc-dark dark:text-white hover:text-kc-blue dark:hover:text-kc-light-blue'
-                  : 'text-white hover:text-gray-200'
-              }`}
-            >
-              Services
-              <ChevronDown className="w-4 h-4" />
-            </Link>
-            {servicesOpen && (
-              <div className="absolute top-full left-0 pt-2">
-                <div className="bg-white dark:bg-kc-dark rounded-lg shadow-lg border border-gray-100 dark:border-kc-blue/20 p-4 min-w-[220px]">
-                  {services.map((s) => (
-                    <Link
-                      key={s.href}
-                      href={s.href}
-                      className="flex items-center gap-3 px-3 py-2.5 rounded-md hover:bg-kc-bg-grey dark:hover:bg-kc-blue/10 transition-colors"
-                    >
-                      <Image src={s.icon} alt="" width={24} height={24} className="w-6 h-6 object-contain block dark:hidden" />
-                      <Image src={s.iconWhite} alt="" width={24} height={24} className="w-6 h-6 object-contain hidden dark:block" />
-                      <span className="text-sm font-semibold font-body text-kc-dark dark:text-white">
-                        {s.name}
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`text-sm font-semibold font-body transition-colors ${
-                scrolled
-                  ? 'text-kc-dark dark:text-white hover:text-kc-blue dark:hover:text-kc-light-blue'
-                  : 'text-white hover:text-gray-200'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-
+        {/* Desktop nav */}
+        <nav className="hidden lg:flex items-center gap-[30px]">
+          {navLinks.map((link) => {
+            const active = isActive(link.href)
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`relative font-body text-[13.5px] font-semibold tracking-[0.01em] transition-colors ${
+                  active ? 'text-kc-blue' : 'text-kc-dark hover:text-kc-blue'
+                }`}
+              >
+                {link.name}
+                {active && (
+                  <span className="absolute -bottom-[6px] left-0 right-0 h-[2px] bg-kc-blue" />
+                )}
+              </Link>
+            )
+          })}
           <Link
             href="/contact/"
-            className={`text-sm font-semibold font-body px-5 py-2.5 rounded-md transition-colors ${
-              scrolled
-                ? 'bg-kc-blue text-white hover:bg-kc-blue-dark'
-                : 'border border-white text-white hover:bg-white/10'
-            }`}
+            className="font-body text-[13px] font-semibold tracking-[0.02em] text-white bg-kc-blue hover:bg-kc-blue-dark px-6 py-[11px] rounded transition-colors"
           >
             Contact
           </Link>
@@ -142,22 +75,25 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
-          className={`lg:hidden p-2 ${scrolled ? 'text-kc-dark dark:text-white' : 'text-white'}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
+          className="lg:hidden p-2 -mr-2 text-kc-dark min-h-[44px] min-w-[44px] flex items-center justify-center"
+          onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
-      {/* Mobile Nav Overlay */}
+      <SectorStripe />
+
+      {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-16 bg-white dark:bg-kc-dark z-40">
-          <nav className="flex flex-col p-6 gap-2">
+        <div className="lg:hidden fixed inset-0 top-[79px] bg-kc-bg z-40 overflow-y-auto">
+          <nav className="flex flex-col p-6 gap-1">
             <Link
               href="/services/"
               onClick={() => setMobileOpen(false)}
-              className="text-xl font-heading font-medium text-kc-dark dark:text-white py-3 border-b border-gray-100 dark:border-gray-800"
+              className="font-heading text-xl font-semibold text-kc-dark py-3 border-b border-kc-divider min-h-[44px] flex items-center"
             >
               Services
             </Link>
@@ -166,27 +102,28 @@ export default function Header() {
                 key={s.href}
                 href={s.href}
                 onClick={() => setMobileOpen(false)}
-                className="flex items-center gap-3 text-base font-body text-kc-text-secondary dark:text-gray-400 py-2 pl-4"
+                className="flex items-center gap-3 font-body text-base text-kc-text-secondary py-2 pl-4 min-h-[44px]"
               >
-                <Image src={s.icon} alt="" width={20} height={20} className="w-5 h-5 object-contain block dark:hidden" />
-                <Image src={s.iconWhite} alt="" width={20} height={20} className="w-5 h-5 object-contain hidden dark:block" />
+                <Image src={s.icon} alt="" width={20} height={20} className="w-5 h-5 object-contain" />
                 {s.name}
               </Link>
             ))}
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-xl font-heading font-medium text-kc-dark dark:text-white py-3 border-b border-gray-100 dark:border-gray-800"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks
+              .filter((l) => l.href !== '/services/')
+              .map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="font-heading text-xl font-semibold text-kc-dark py-3 border-b border-kc-divider min-h-[44px] flex items-center"
+                >
+                  {link.name}
+                </Link>
+              ))}
             <Link
               href="/contact/"
               onClick={() => setMobileOpen(false)}
-              className="mt-4 bg-kc-blue text-white text-center text-lg font-semibold font-body px-6 py-3 rounded-md"
+              className="mt-4 bg-kc-blue text-white text-center font-body text-lg font-semibold px-6 py-3 rounded min-h-[44px] flex items-center justify-center"
             >
               Contact
             </Link>

@@ -1,11 +1,9 @@
-'use client'
-
-import { motion } from 'framer-motion'
-
-const clients = [
+// Client bar — "Trusted by" + client names. Wordmarks in Space Grotesk 600
+// (no logo lockups exist for these; names read as a quiet trust bar).
+const CLIENTS = [
   'Lawrence Berkeley National Laboratory',
-  'Natural Resources Defense Council',
-  'University of California, Davis',
+  'NRDC',
+  'UC Davis',
   'Ceres',
   'Carba',
   'Scale Microgrid Solutions',
@@ -13,44 +11,21 @@ const clients = [
 
 export default function ClientLogos() {
   return (
-    <section className="py-16 md:py-20 bg-kc-bg-grey dark:bg-kc-dark-alt">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.1 }}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="text-center text-sm font-body font-semibold text-kc-text-secondary dark:text-gray-400 uppercase tracking-wider mb-10">
-            Trusted by leading organizations
-          </p>
-
-          {/* Desktop: single row with dividers */}
-          <div className="hidden md:flex items-center justify-center">
-            {clients.map((name, i) => (
-              <div key={name} className="flex items-center">
-                {i > 0 && (
-                  <span className="mx-6 h-5 w-px bg-kc-dark/20 dark:bg-white/20" />
-                )}
-                <span className="font-heading font-bold text-sm lg:text-base text-kc-dark/80 dark:text-gray-300 whitespace-nowrap">
-                  {name}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Mobile: stacked centered list */}
-          <div className="md:hidden flex flex-col items-center gap-4">
-            {clients.map((name) => (
-              <span
-                key={name}
-                className="font-heading font-bold text-sm text-kc-dark/80 dark:text-gray-300 text-center"
-              >
-                {name}
-              </span>
-            ))}
-          </div>
-        </motion.div>
+    <section className="bg-white border-y border-kc-border">
+      <div className="mx-auto max-w-[1240px] px-8 py-[30px] flex flex-col md:flex-row md:items-center gap-6 md:gap-8">
+        <span className="font-body text-[11px] font-semibold uppercase tracking-[0.16em] text-kc-text-muted whitespace-nowrap">
+          Trusted by
+        </span>
+        <div className="flex flex-wrap items-center gap-x-7 gap-y-3 md:flex-1 md:justify-between">
+          {CLIENTS.map((c) => (
+            <span
+              key={c}
+              className="font-heading text-sm font-semibold text-kc-text-lead"
+            >
+              {c}
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   )

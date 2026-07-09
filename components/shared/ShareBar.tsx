@@ -37,38 +37,35 @@ export default function ShareBar({ title, slug }: { title: string; slug: string 
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
   const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`
 
+  const pill =
+    'inline-flex items-center gap-2 rounded-full border border-kc-divider px-4 py-2 font-body text-[11.5px] font-semibold text-kc-text-lead transition-colors hover:border-kc-blue hover:text-kc-blue'
+
   return (
-    <div className="flex items-center gap-4">
-      <span className="text-sm font-semibold font-body text-kc-text-secondary dark:text-gray-300">
-        Share
-      </span>
-      <div className="flex items-center gap-2">
-        <a
-          href={linkedInUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-kc-bg-grey dark:bg-kc-dark-card text-kc-text-secondary dark:text-gray-300 hover:bg-kc-blue hover:text-white transition-colors"
-          aria-label="Share on LinkedIn"
-        >
-          <LinkedinIcon className="w-4 h-4" />
-        </a>
-        <a
-          href={twitterUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-kc-bg-grey dark:bg-kc-dark-card text-kc-text-secondary dark:text-gray-300 hover:bg-kc-blue hover:text-white transition-colors"
-          aria-label="Share on X"
-        >
-          <XIcon className="w-4 h-4" />
-        </a>
-        <button
-          onClick={handleCopyLink}
-          className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-kc-bg-grey dark:bg-kc-dark-card text-kc-text-secondary dark:text-gray-300 hover:bg-kc-blue hover:text-white transition-colors"
-          aria-label="Copy link"
-        >
-          {copied ? <Check className="w-4 h-4" /> : <LinkIcon className="w-4 h-4" />}
-        </button>
-      </div>
+    <div className="flex flex-wrap items-center gap-2.5">
+      <a
+        href={linkedInUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={pill}
+        aria-label="Share on LinkedIn"
+      >
+        <LinkedinIcon className="h-3.5 w-3.5" />
+        Share on LinkedIn
+      </a>
+      <a
+        href={twitterUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={pill}
+        aria-label="Share on X"
+      >
+        <XIcon className="h-3.5 w-3.5" />
+        Share on X
+      </a>
+      <button onClick={handleCopyLink} className={pill} aria-label="Copy link">
+        {copied ? <Check className="h-3.5 w-3.5" /> : <LinkIcon className="h-3.5 w-3.5" />}
+        {copied ? 'Copied' : 'Copy link'}
+      </button>
     </div>
   )
 }

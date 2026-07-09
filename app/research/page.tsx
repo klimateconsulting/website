@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { publications, type Publication } from '@/lib/publications'
 import { siteUrl } from '@/lib/metadata'
+import Kicker from '@/components/shared/Kicker'
+import CTABand from '@/components/shared/CTABand'
 import ResearchListClient from './ResearchListClient'
 
 export const metadata: Metadata = {
@@ -17,6 +19,17 @@ export const metadata: Metadata = {
     type: 'website',
   },
 }
+
+// ── Editable page-header copy ────────────────────────────────────────────
+const HEADER_KICKER = 'Research & Publications'
+const HEADER_TITLE = 'The research behind the consulting.'
+const HEADER_INTRO =
+  'Two decades of peer-reviewed papers, national-lab technical reports, and interactive tools — from grid demand response and ISO 50001 to controlled environment agriculture and the water-energy nexus. Free to cite and embed.'
+
+// ── Editable closing CTA copy ─────────────────────────────────────────────
+const CTA_HEADING = 'Need research like this?'
+const CTA_SUBLINE = 'This body of work is the standard every engagement is held to.'
+const CTA_BUTTON_LABEL = 'Get in touch'
 
 function absoluteUrl(u: string): string {
   return u.startsWith('http') ? u : `${siteUrl}${u}`
@@ -69,29 +82,29 @@ export default function ResearchPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Hero / intro */}
-      <section className="py-20 md:py-28 bg-kc-dark text-white">
-        <div className="max-w-[1200px] mx-auto px-6 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-            Research &amp; Publications
-          </h1>
-          <p className="font-body text-lg text-gray-300 max-w-3xl mx-auto">
-            Two decades of peer-reviewed papers, national-lab technical reports, and interactive
-            tools on energy, water, and agricultural sustainability — from grid demand response and
-            ISO 50001 energy management to controlled environment agriculture and the water-energy
-            nexus. Our work is grounded in this research.
-          </p>
-          <p className="font-body text-sm text-gray-400 max-w-2xl mx-auto mt-6">
-            For media &amp; collaborators: our interactive tools are free to cite and embed.{' '}
-            <a href="/contact/" className="text-kc-light-blue hover:underline">
-              Get in touch
-            </a>
-            .
-          </p>
+      {/* Page header */}
+      <section className="bg-kc-bg">
+        <div className="max-w-[1240px] mx-auto px-8 pt-20 pb-10 md:pt-24 md:pb-12">
+          <Kicker className="mb-6">{HEADER_KICKER}</Kicker>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end">
+            <h1 className="lg:col-span-7 font-heading text-4xl md:text-[56px] leading-[1.08] font-semibold tracking-[-0.02em] text-kc-dark m-0">
+              {HEADER_TITLE}
+            </h1>
+            <p className="lg:col-span-5 font-body text-base leading-[1.8] text-kc-text-lead m-0">
+              {HEADER_INTRO}
+            </p>
+          </div>
         </div>
       </section>
 
       <ResearchListClient publications={publications} />
+
+      <CTABand
+        heading={CTA_HEADING}
+        subline={CTA_SUBLINE}
+        buttonLabel={CTA_BUTTON_LABEL}
+        href="/contact/"
+      />
     </div>
   )
 }

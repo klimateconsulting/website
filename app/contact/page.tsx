@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Mail, MapPin } from 'lucide-react'
+import Kicker from '@/components/shared/Kicker'
+import FadeIn from '@/components/shared/FadeIn'
 
 // ── Contact form backend config ────────────────────────────────────────────
 // Both values below are public (the site key is meant to be exposed, and the
@@ -11,6 +12,26 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyCxrHSbGzCdJTw4Qrcu
 const TURNSTILE_SITE_KEY = '0x4AAAAAADp4ma2CwHgvVDoK'
 const TURNSTILE_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js'
 
+// ── Editable copy ───────────────────────────────────────────────────────────
+const PAGE_HEADER = {
+  kicker: 'Contact',
+  title: "Let's work together.",
+  intro:
+    "Whether you have a specific project in mind or want to explore what's possible, we'd love to hear from you.",
+}
+
+const EMAIL_ADDRESS = 'hello@klimateconsulting.com'
+const LINKEDIN_URL = 'https://www.linkedin.com/company/klimate-consulting/'
+const LINKEDIN_LABEL = 'Klimate Consulting'
+const LOCATION = 'San Francisco, CA'
+const RESPONSE_TIME_COPY = 'We reply to every serious inquiry within two business days.'
+const MESSAGE_PLACEHOLDER = 'What are you trying to figure out?'
+
+const SUCCESS_COPY = {
+  heading: 'Thank you!',
+  body: "We've received your message and will be in touch soon.",
+}
+
 function LinkedinIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -18,6 +39,11 @@ function LinkedinIcon({ className }: { className?: string }) {
     </svg>
   )
 }
+
+// Shared input styling — light theme, 4px radius, hairline border.
+const inputClasses =
+  'w-full px-4 py-[14px] rounded border-[1.5px] border-kc-divider bg-white text-kc-dark font-body text-sm outline-none focus:border-kc-blue transition-colors'
+const labelClasses = 'block font-body text-[13px] font-semibold text-kc-dark mb-2'
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
@@ -63,184 +89,162 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="pt-20">
-      <section className="py-20 md:py-28 bg-kc-dark text-white">
-        <div className="max-w-[1200px] mx-auto px-6 text-center">
-          <h1 className="font-heading text-4xl md:text-5xl font-bold mb-6">
-            Let&apos;s Work Together
-          </h1>
-          <p className="font-body text-lg text-gray-300 max-w-2xl mx-auto">
-            Whether you have a specific project in mind or want to explore how Klimate can help your
-            organization meet its sustainability goals, we&apos;d love to hear from you.
-          </p>
+    <div className="pt-20 bg-kc-bg">
+      {/* Page header */}
+      <section className="bg-kc-bg border-b border-kc-border">
+        <div className="mx-auto max-w-[1240px] px-8 pt-16 pb-16 md:pt-[88px] md:pb-16">
+          <FadeIn>
+            <Kicker className="mb-6">{PAGE_HEADER.kicker}</Kicker>
+          </FadeIn>
+          <FadeIn delay={0.08}>
+            <div className="grid grid-cols-1 lg:grid-cols-[7fr_5fr] gap-8 lg:gap-[72px] items-end">
+              <h1 className="font-heading font-semibold text-[36px] sm:text-[44px] lg:text-[56px] leading-[1.08] tracking-[-0.02em] text-kc-dark m-0">
+                {PAGE_HEADER.title}
+              </h1>
+              <p className="font-body text-base leading-[1.8] text-kc-text-lead m-0">
+                {PAGE_HEADER.intro}
+              </p>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
-      <section className="py-16 md:py-20 bg-white dark:bg-kc-dark">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-            {/* Form */}
-            <div>
-              {submitted ? (
-                <div className="bg-kc-light-green dark:bg-kc-green/10 rounded-xl p-8 text-center">
-                  <h3 className="font-heading text-2xl font-bold text-kc-dark dark:text-white mb-3">
-                    Thank you!
-                  </h3>
-                  <p className="font-body text-kc-text-secondary dark:text-gray-400">
-                    We&apos;ve received your message and will be in touch soon.
-                  </p>
+      {/* Form + info */}
+      <section className="bg-kc-bg">
+        <div className="mx-auto max-w-[1240px] px-8 py-16 md:py-20 lg:py-[80px] lg:pb-[110px] grid grid-cols-1 lg:grid-cols-[7fr_4fr] gap-16 lg:gap-24">
+          {/* Form */}
+          <FadeIn>
+            {submitted ? (
+              <div className="bg-kc-bg-blue rounded-md p-10 text-center">
+                <h3 className="font-heading text-2xl font-semibold text-kc-dark mb-3">
+                  {SUCCESS_COPY.heading}
+                </h3>
+                <p className="font-body text-kc-text-secondary">{SUCCESS_COPY.body}</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className={labelClasses}>First name</label>
+                    <input type="text" name="firstName" required className={inputClasses} />
+                  </div>
+                  <div>
+                    <label className={labelClasses}>Last name</label>
+                    <input type="text" name="lastName" required className={inputClasses} />
+                  </div>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                        First Name
-                      </label>
-                      <input
-                        type="text"
-                        name="firstName"
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue"
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                        Last Name
-                      </label>
-                      <input
-                        type="text"
-                        name="lastName"
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue"
-                      />
-                    </div>
-                  </div>
 
-                  <div>
-                    <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                      Email
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue"
-                    />
-                  </div>
+                <div>
+                  <label className={labelClasses}>Email</label>
+                  <input type="email" name="email" required className={inputClasses} />
+                </div>
 
-                  <div>
-                    <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                      Organization
-                    </label>
-                    <input
-                      type="text"
-                      name="organization"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue"
-                    />
-                  </div>
+                <div>
+                  <label className={labelClasses}>Organization</label>
+                  <input type="text" name="organization" className={inputClasses} />
+                </div>
 
-                  <div>
-                    <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                      Area of Interest
-                    </label>
-                    <select
-                      name="interest"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue"
-                    >
-                      <option value="">Select an area...</option>
-                      <option value="agriculture">Agriculture</option>
-                      <option value="energy">Energy</option>
-                      <option value="water">Water</option>
-                      <option value="food-systems">Food Systems</option>
-                      <option value="data-labs">Data Labs</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
+                <div>
+                  <label className={labelClasses}>Area of interest</label>
+                  <select name="interest" className={inputClasses}>
+                    <option value="">Select an area...</option>
+                    <option value="agriculture">Agriculture</option>
+                    <option value="energy">Energy</option>
+                    <option value="water">Water</option>
+                    <option value="food-systems">Food Systems</option>
+                    <option value="data-labs">Data Labs</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
 
-                  <div>
-                    <label className="block font-body text-sm font-semibold text-kc-dark dark:text-white mb-2">
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      rows={5}
-                      required
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-kc-dark-card text-kc-dark dark:text-white font-body text-sm focus:outline-none focus:ring-2 focus:ring-kc-blue resize-vertical"
-                    />
-                  </div>
+                <div>
+                  <label className={labelClasses}>Message</label>
+                  <textarea
+                    name="message"
+                    rows={6}
+                    required
+                    placeholder={MESSAGE_PLACEHOLDER}
+                    className={`${inputClasses} resize-y leading-[1.6]`}
+                  />
+                </div>
 
-                  {/* Cloudflare Turnstile — auto-rendered by the script above */}
-                  <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
+                {/* Cloudflare Turnstile — auto-rendered by the script above */}
+                <div className="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} />
 
-                  {error && (
-                    <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-                      {error}
-                    </p>
-                  )}
+                {error && (
+                  <p className="text-sm text-red-600" role="alert">
+                    {error}
+                  </p>
+                )}
 
+                <div>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="bg-kc-blue text-white font-body font-semibold text-sm px-8 py-3 rounded-md hover:bg-kc-blue-dark transition-colors hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
+                    className="inline-flex items-center justify-center font-body font-semibold text-sm tracking-[0.02em] text-white bg-kc-blue hover:bg-kc-blue-dark px-8 py-[15px] rounded transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    {submitting ? 'Sending…' : 'Send Message'}
+                    {submitting ? 'Sending…' : 'Send message'}
                   </button>
 
-                  <p className="text-sm text-kc-text-secondary dark:text-gray-300 mt-4">
+                  <p className="font-body text-[13px] text-kc-text-muted mt-4">
                     Or email us directly at{' '}
                     <a
-                      href="mailto:hello@klimateconsulting.com"
-                      className="text-kc-blue dark:text-kc-light-blue hover:underline"
+                      href={`mailto:${EMAIL_ADDRESS}`}
+                      className="font-semibold text-kc-blue hover:text-kc-blue-dark"
                     >
-                      hello@klimateconsulting.com
+                      {EMAIL_ADDRESS}
                     </a>
                   </p>
-                </form>
-              )}
+                </div>
+              </form>
+            )}
+          </FadeIn>
+
+          {/* Info cards */}
+          <FadeIn delay={0.1} className="flex flex-col gap-5 lg:self-start">
+            <div className="bg-kc-bg-grey rounded-md p-7">
+              <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted mb-2">
+                Email
+              </div>
+              <a
+                href={`mailto:${EMAIL_ADDRESS}`}
+                className="font-heading text-base font-medium text-kc-blue hover:text-kc-blue-dark"
+              >
+                {EMAIL_ADDRESS}
+              </a>
             </div>
 
-            {/* Contact info */}
-            <div className="space-y-6">
-              <div className="flex items-start gap-3">
-                <Mail className="w-5 h-5 text-kc-blue mt-0.5" />
-                <div>
-                  <h4 className="font-body text-sm font-semibold text-kc-dark dark:text-white">Email</h4>
-                  <a
-                    href="mailto:hello@klimateconsulting.com"
-                    className="text-sm text-kc-text-secondary dark:text-gray-400 hover:text-kc-blue"
-                  >
-                    hello@klimateconsulting.com
-                  </a>
-                </div>
+            <div className="bg-kc-bg-grey rounded-md p-7">
+              <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted mb-2">
+                Location
               </div>
+              <div className="font-heading text-base font-medium text-kc-dark">{LOCATION}</div>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <MapPin className="w-5 h-5 text-kc-blue mt-0.5" />
-                <div>
-                  <h4 className="font-body text-sm font-semibold text-kc-dark dark:text-white">Location</h4>
-                  <p className="text-sm text-kc-text-secondary dark:text-gray-400">
-                    San Francisco, CA
-                  </p>
-                </div>
+            <div className="bg-kc-bg-grey rounded-md p-7">
+              <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted mb-2">
+                LinkedIn
               </div>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 font-heading text-base font-medium text-kc-blue hover:text-kc-blue-dark"
+              >
+                <LinkedinIcon className="w-4 h-4" />
+                {LINKEDIN_LABEL}
+              </a>
+            </div>
 
-              <div className="flex items-start gap-3">
-                <LinkedinIcon className="w-5 h-5 text-kc-blue mt-0.5" />
-                <div>
-                  <h4 className="font-body text-sm font-semibold text-kc-dark dark:text-white">LinkedIn</h4>
-                  <a
-                    href="https://www.linkedin.com/company/klimate-consulting/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-kc-text-secondary dark:text-gray-400 hover:text-kc-blue"
-                  >
-                    Klimate Consulting
-                  </a>
-                </div>
+            <div className="bg-kc-bg-blue rounded-md p-7">
+              <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-blue mb-2">
+                Response time
+              </div>
+              <div className="font-body text-sm leading-[1.7] text-[#2c4046]">
+                {RESPONSE_TIME_COPY}
               </div>
             </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
     </div>

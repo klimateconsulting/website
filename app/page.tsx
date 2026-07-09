@@ -1,10 +1,11 @@
 import Hero from '@/components/home/Hero'
+import ClientLogos from '@/components/home/ClientLogos'
+import HowWeWork from '@/components/home/HowWeWork'
 import FocusAreas from '@/components/home/FocusAreas'
 import FeaturedProjects from '@/components/home/FeaturedProjects'
 import DataLabsTeaser from '@/components/home/DataLabsTeaser'
 import FromOurResearch from '@/components/home/FromOurResearch'
-import ClientLogos from '@/components/home/ClientLogos'
-import CTAStrip from '@/components/home/CTAStrip'
+import CTABand from '@/components/shared/CTABand'
 import LegacyHashRedirect from '@/components/shared/LegacyHashRedirect'
 import type { Metadata } from 'next'
 
@@ -17,12 +18,13 @@ export default function HomePage() {
     <>
       <LegacyHashRedirect />
       <Hero />
+      <ClientLogos />
+      <HowWeWork />
       <FocusAreas />
       <FeaturedProjects />
       <DataLabsTeaser />
       <FromOurResearch />
-      <ClientLogos />
-      <CTAStrip />
+      <CTABand />
     </>
   )
 }

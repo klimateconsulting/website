@@ -34,25 +34,30 @@ export default function TableOfContents({ headings }: { headings: TocHeading[] }
   if (headings.length === 0) return null
 
   return (
-    <nav className="text-sm font-body">
-      <h4 className="font-heading font-bold text-kc-dark dark:text-white mb-4 text-xs uppercase tracking-wider">
+    <nav>
+      <div className="mb-4 font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-muted">
         On this page
-      </h4>
-      <ul className="space-y-2">
-        {headings.map((heading) => (
-          <li key={heading.id} className={heading.level === 3 ? 'pl-4' : ''}>
-            <a
-              href={`#${heading.id}`}
-              className={`block py-0.5 transition-colors leading-snug ${
-                activeId === heading.id
-                  ? 'text-kc-blue dark:text-kc-light-blue font-semibold'
-                  : 'text-kc-text-secondary dark:text-gray-300 hover:text-kc-blue dark:hover:text-kc-light-blue'
-              }`}
-            >
-              {heading.text}
-            </a>
-          </li>
-        ))}
+      </div>
+      <ul className="flex flex-col gap-3 border-l-2 border-kc-border">
+        {headings.map((heading) => {
+          const active = activeId === heading.id
+          return (
+            <li key={heading.id}>
+              <a
+                href={`#${heading.id}`}
+                className={`-ml-[2px] block border-l-2 font-body text-[13px] leading-snug transition-colors ${
+                  heading.level === 3 ? 'pl-7' : 'pl-[14px]'
+                } ${
+                  active
+                    ? 'border-kc-blue font-semibold text-kc-blue'
+                    : 'border-transparent text-kc-text-secondary hover:text-kc-blue'
+                }`}
+              >
+                {heading.text}
+              </a>
+            </li>
+          )
+        })}
       </ul>
     </nav>
   )

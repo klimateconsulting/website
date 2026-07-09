@@ -1,47 +1,26 @@
-import { AlertCircle, Lightbulb, BarChart3, AlertTriangle } from 'lucide-react'
-
 interface CalloutProps {
+  /** Kept for backward compatibility; drives the default label when `label` is absent. */
   type?: 'note' | 'warning' | 'insight' | 'data'
+  /** Uppercase blue eyebrow shown above the body. */
+  label?: string
   children: React.ReactNode
 }
 
-const config = {
-  note: {
-    icon: AlertCircle,
-    bg: 'bg-blue-50 dark:bg-blue-950/30',
-    border: 'border-blue-200 dark:border-blue-800',
-    iconColor: 'text-blue-500',
-  },
-  warning: {
-    icon: AlertTriangle,
-    bg: 'bg-amber-50 dark:bg-amber-950/30',
-    border: 'border-amber-200 dark:border-amber-800',
-    iconColor: 'text-amber-500',
-  },
-  insight: {
-    icon: Lightbulb,
-    bg: 'bg-kc-bg-blue dark:bg-kc-blue/10',
-    border: 'border-kc-light-blue dark:border-kc-blue/30',
-    iconColor: 'text-kc-blue',
-  },
-  data: {
-    icon: BarChart3,
-    bg: 'bg-kc-light-green dark:bg-kc-green/10',
-    border: 'border-kc-green/30 dark:border-kc-green/30',
-    iconColor: 'text-kc-green',
-  },
+const defaultLabels: Record<NonNullable<CalloutProps['type']>, string> = {
+  note: 'Note',
+  warning: 'Take note',
+  insight: 'Worth knowing',
+  data: 'By the numbers',
 }
 
-export default function Callout({ type = 'note', children }: CalloutProps) {
-  const { icon: Icon, bg, border, iconColor } = config[type]
-
+export default function Callout({ type = 'note', label, children }: CalloutProps) {
   return (
-    <div className={`${bg} ${border} border rounded-lg p-5 my-6 not-prose`}>
-      <div className="flex gap-3">
-        <Icon className={`w-5 h-5 ${iconColor} flex-shrink-0 mt-0.5`} />
-        <div className="text-sm font-body text-kc-dark dark:text-gray-200 leading-relaxed">
-          {children}
-        </div>
+    <div className="not-prose my-10 rounded-md bg-kc-bg-blue px-[30px] py-[26px]">
+      <div className="mb-2.5 font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-blue">
+        {label ?? defaultLabels[type]}
+      </div>
+      <div className="font-body text-[14.5px] leading-[1.7] text-[#2c4046] [&_a]:font-semibold [&_a]:text-kc-blue">
+        {children}
       </div>
     </div>
   )
