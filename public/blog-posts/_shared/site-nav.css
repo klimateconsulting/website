@@ -1,13 +1,30 @@
-/* Klimate Consulting — shared nav for standalone interactive posts.
-   These posts live outside the Next.js layout, so they don't get the React
-   Header/Footer. This lightweight vanilla bar (injected by site-nav.js) gives
-   them the same global navigation so no visitor is stranded.
-   Brand: --kc-dark #162123, --kc-blue #0F4C81, --kc-light-blue #C3D2DF. */
+/* Klimate Consulting — shared nav/footer shell for standalone interactive posts.
+   These posts live outside the Next.js App Router layout (custom scrollytelling,
+   charts, maps), so they don't get the React Header/Footer. This vanilla-CSS/JS
+   bar (injected by site-nav.js) brings them into the 2026 redesign shell —
+   same header, footer and reading-progress bar as the rest of the site —
+   without touching the bespoke article content underneath.
+
+   Palette / type mirrors components/layout/Header.tsx, Footer.tsx,
+   components/shared/SectorStripe.tsx and app/globals.css:
+     --kc-blue #0F4C81   --kc-blue-dark #0a3a66   --kc-green #70A288
+     --kc-yellow #FFAD05 --kc-brown #220C10       --kc-dark #162123
+     --kc-border #E7EAEE --kc-light-blue #C3D2DF  --kc-bg-blue #D3EBFB
+   Fonts: Montserrat (body/nav) + Space Grotesk (headings) — loaded by
+   site-nav.js via Google Fonts if the host page doesn't already have them. */
 
 :root {
-  --kc-nav-dark: #162123;
-  --kc-nav-blue: #0F4C81;
-  --kc-nav-light-blue: #C3D2DF;
+  --kc-blue: #0F4C81;
+  --kc-blue-dark: #0a3a66;
+  --kc-green: #70A288;
+  --kc-yellow: #FFAD05;
+  --kc-brown: #220C10;
+  --kc-dark: #162123;
+  --kc-border: #E7EAEE;
+  --kc-light-blue: #C3D2DF;
+  --kc-bg-blue: #D3EBFB;
+  --kc-nav-font: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --kc-heading-font: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 }
 
 /* Skip link — visually hidden until focused. */
@@ -16,131 +33,222 @@
   left: -9999px;
   top: 0;
   z-index: 10001;
-  background: var(--kc-nav-blue);
+  background: var(--kc-blue);
   color: #fff;
   padding: 10px 16px;
   border-radius: 0 0 6px 0;
-  font: 600 14px/1 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font: 600 14px/1 var(--kc-nav-font);
   text-decoration: none;
 }
 .kc-skip:focus { left: 0; }
 
-/* Sticky header — first element in <body>, so it occupies layout flow and
-   never overlaps the Plotly/Mapbox content beneath it. */
+/* Defensive reset — these posts each carry their own bare-tag CSS (e.g. a
+   global `footer{text-align:center;padding:...}` or `header{...}`) that would
+   otherwise bleed, via inheritance or shared tag-selector specificity, into
+   our injected <header>/<footer>. Pin the baseline here; every visible value
+   below is then set explicitly by a class, so it always wins. */
+.kc-nav, .kc-foot {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  font-size: 16px;
+  line-height: normal;
+  font-style: normal;
+  font-weight: normal;
+  text-transform: none;
+  letter-spacing: normal;
+  box-sizing: border-box;
+}
+.kc-nav *, .kc-foot *, .kc-progress * {
+  box-sizing: border-box;
+}
+
+/* ---------- Header ---------- */
 .kc-nav {
   position: sticky;
   top: 0;
   z-index: 10000;
-  background: var(--kc-nav-dark);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Montserrat", sans-serif;
+  background: rgba(253, 253, 251, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--kc-border);
+  font-family: var(--kc-nav-font);
 }
 .kc-nav__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 0 20px;
-  height: 56px;
+  padding: 0 32px;
+  height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 32px;
 }
 .kc-nav__brand {
-  color: #fff;
-  font-weight: 700;
-  font-size: 17px;
-  letter-spacing: 0.2px;
-  text-decoration: none;
-  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  line-height: 0;
 }
-.kc-nav__brand:hover { color: var(--kc-nav-light-blue); }
+.kc-nav__brand img {
+  height: 34px;
+  width: auto;
+  max-width: none;
+  display: block;
+}
 .kc-nav__links {
   display: flex;
   align-items: center;
-  gap: 26px;
+  gap: 30px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 .kc-nav__links a {
-  color: #e5e7eb;
-  font-size: 14px;
+  color: var(--kc-dark);
+  font-family: var(--kc-nav-font);
+  font-size: 13.5px;
   font-weight: 600;
+  letter-spacing: 0.01em;
   text-decoration: none;
   transition: color 0.15s ease;
+  white-space: nowrap;
 }
-.kc-nav__links a:hover { color: #fff; }
+.kc-nav__links a:hover { color: var(--kc-blue); }
+.kc-nav__contact {
+  font-family: var(--kc-nav-font);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fff !important;
+  background: var(--kc-blue);
+  padding: 11px 24px;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+  white-space: nowrap;
+}
+.kc-nav__contact:hover { background: var(--kc-blue-dark) !important; color: #fff !important; }
 .kc-nav__toggle {
   display: none;
   background: none;
   border: 0;
-  color: #fff;
+  color: var(--kc-dark);
   cursor: pointer;
   padding: 6px;
   line-height: 0;
 }
 .kc-nav__toggle svg { width: 26px; height: 26px; }
 
+/* Reading-progress bar — replaces the marketing-site sector stripe on posts.
+   Sits inside the sticky header so it's always visible while scrolling. */
+.kc-progress {
+  height: 3px;
+  background: var(--kc-border);
+  overflow: hidden;
+}
+.kc-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--kc-blue);
+  transition: width 0.08s linear;
+}
+
 /* Mobile */
-@media (max-width: 640px) {
+@media (max-width: 1023px) {
+  .kc-nav__inner { padding: 0 20px; height: 64px; }
   .kc-nav__toggle { display: inline-flex; }
+  .kc-nav__contact { display: none; }
   .kc-nav__links {
     position: absolute;
-    top: 56px;
+    top: 64px;
     left: 0;
     right: 0;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 0;
-    background: var(--kc-nav-dark);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: #FDFDFB;
+    border-bottom: 1px solid var(--kc-border);
     padding: 8px 0;
     display: none;
   }
   .kc-nav__links.kc-open { display: flex; }
   .kc-nav__links li { width: 100%; }
-  .kc-nav__links a {
+  .kc-nav__links a { display: block; padding: 13px 20px; width: 100%; }
+  .kc-nav__links .kc-nav__contact {
     display: block;
+    margin: 8px 20px 4px;
+    text-align: center;
     padding: 12px 20px;
-    width: 100%;
   }
 }
 
-/* Footer */
+/* ---------- Footer ---------- */
 .kc-foot {
-  background: var(--kc-nav-dark);
-  color: #9ca3af;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Montserrat", sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--kc-blue-dark);
+  font-family: var(--kc-nav-font);
 }
 .kc-foot__inner {
-  max-width: 1200px;
+  max-width: 1240px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 64px 32px 40px;
 }
-.kc-foot__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 26px;
-  list-style: none;
+.kc-foot__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+@media (min-width: 768px) {
+  .kc-foot__grid { grid-template-columns: 4fr 2fr 2fr 3fr; gap: 48px; }
+}
+.kc-foot__brand img { height: 30px; width: auto; margin-bottom: 20px; display: block; }
+.kc-foot__tagline {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #9db8cd;
   margin: 0 0 20px;
-  padding: 0;
+  max-width: 280px;
 }
-.kc-foot__links a {
-  color: #d1d5db;
-  font-size: 14px;
+.kc-foot__linkedin {
+  font-size: 13px;
   font-weight: 600;
+  color: var(--kc-light-blue);
   text-decoration: none;
 }
-.kc-foot__links a:hover { color: #fff; }
-.kc-foot__cross {
-  font-size: 13px;
-  margin: 0 0 14px;
+.kc-foot__linkedin:hover { color: #fff; }
+.kc-foot__heading {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: #7fa2bd;
+  margin: 0 0 18px;
 }
-.kc-foot__cross a { color: var(--kc-nav-light-blue); text-decoration: none; }
-.kc-foot__cross a:hover { text-decoration: underline; }
-.kc-foot__copy {
-  font-size: 13px;
-  color: #6b7280;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 18px;
+.kc-foot__col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.kc-foot__col a, .kc-foot__col span {
+  font-size: 13.5px;
+  color: #d6e4ef;
+  text-decoration: none;
+}
+.kc-foot__col a:hover { color: #fff; }
+.kc-foot__col span.kc-foot__muted { color: #9db8cd; }
+.kc-foot__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  padding-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.kc-foot__copy { font-size: 12.5px; color: #7fa2bd; }
+.kc-foot__stripe {
+  display: grid;
+  grid-template-columns: repeat(4, 28px);
+  height: 3px;
+  flex-shrink: 0;
 }
