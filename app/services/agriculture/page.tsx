@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const config: SectorServiceConfig = {
   sectorKey: 'agriculture',
   intro:
-    'Soils are degrading and water is dwindling — yet agriculture must produce more than ever. We analyze how farms use land, water, and energy, and where the biggest gains hide.',
+    'Soils are degrading and water is dwindling — yet agriculture must produce more than ever. We analyze how farms use land, water, and energy, and where the biggest gains hide. We believe agriculture is the next frontier — no sector has greater untapped potential for efficiency, resilience, and carbon impact.',
   heroImage: '/images/services/agriculture-hero.jpg',
   heroAlt: 'Aerial view of agricultural crop rows',
   whatWeDoHeading: 'More output, fewer inputs',

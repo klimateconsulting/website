@@ -21,6 +21,29 @@ const config: SectorServiceConfig = {
     "California's water system — the largest in the world — was built for different conditions. Snowpack is declining, groundwater basins are overdrafted, and the state's agricultural water delivery network remains the single largest electricity consumer in the state. Effective management requires data-driven modernization, but most water agencies still lack the granular data needed to make informed decisions.",
     "We help organizations understand and address water challenges through research, data analysis, and strategic advisory — with a particular focus on California's water infrastructure and policy landscape.",
   ],
+  whatWeDoExtra: (
+    <p className="m-0 font-body text-[15.5px] leading-[1.85] text-kc-text-lead">
+      Our deep research into California water points to two structural barriers:
+      the lack of usable water data and the way water is priced. That&rsquo;s where
+      we focus — building the{' '}
+      <a
+        href="https://data.klimateconsulting.com/ca-water/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="font-semibold text-kc-blue hover:underline"
+      >
+        datasets
+      </a>{' '}
+      and the{' '}
+      <a
+        href="/blog-posts/price-of-water/"
+        className="font-semibold text-kc-blue hover:underline"
+      >
+        pricing analysis
+      </a>{' '}
+      that modernization decisions need.
+    </p>
+  ),
   servicesLabel: 'Our water services',
   services: [
     'Water management R&D and policy analysis',

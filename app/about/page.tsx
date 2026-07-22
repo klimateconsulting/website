@@ -154,8 +154,8 @@ export default function AboutPage() {
                 <p className="font-body text-base leading-relaxed text-kc-text-secondary">
                   This is the trajectory we work toward: pulling the line away from
                   business-as-usual, reaching net-zero by mid-century, then net-negative through
-                  carbon removal. Every Klimate engagement — from microgrid deployments and energy
-                  management research to food-system decarbonization and water modernization — is
+                  carbon removal. Every Klimate engagement — from industrial energy research and
+                  energy management to food-system decarbonization and water modernization — is
                   aimed at moving that line.
                 </p>
               </div>

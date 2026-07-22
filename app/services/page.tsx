@@ -51,7 +51,7 @@ const SECTOR_ROWS: Record<
     challenge:
       'Grid stress, rising demand, and new threats to energy security and reliability.',
     whatWeDo:
-      'Microgrid solutions, energy management R&D, industrial energy efficiency, DOE program support.',
+      'Industrial energy research, energy management R&D, industrial energy efficiency, DOE program support.',
   },
   agriculture: {
     href: '/services/agriculture/',

@@ -6,11 +6,11 @@ import { SECTOR_ORDER, SECTORS } from '@/lib/sectors'
 // Short, editable descriptions per focus area (homepage index rows).
 const DESCRIPTIONS: Record<string, string> = {
   water:
-    'Most of the world lives in water-stressed regions. We research how to modernize water management for the 21st century.',
+    'Most of the world lives in water-stressed regions. We research how to modernize water management for the 21st century. Our deep research into California water points to two structural barriers: the lack of usable water data and the way water is priced.',
   energy:
-    'Energy systems are under new pressure. We develop microgrid solutions and energy-management R&D for a resilient, efficient grid.',
+    'Energy systems are under new pressure. We research how industries use and manage energy — and how to change the way energy is viewed, managed, and used across operations.',
   agriculture:
-    'From farm operations to agtech, we analyze how agriculture uses land, water, and energy — and where the biggest efficiency gains hide.',
+    'From farm operations to agtech, we analyze how agriculture uses land, water, and energy — and where the biggest efficiency gains hide. We believe agriculture is the next frontier — no sector has greater untapped potential for efficiency, resilience, and carbon impact.',
   'food-systems':
     'We trace impacts through the food value chain from farm to fork — giving clients the data for smarter Scope 3 reporting and sourcing decisions.',
 }
