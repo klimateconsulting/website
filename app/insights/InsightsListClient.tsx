@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getSector } from '@/lib/sectors'
-import JournalRow from '@/components/shared/JournalRow'
+import FadeIn from '@/components/shared/FadeIn'
 import NewsletterPanel from '@/components/blog/NewsletterPanel'
 
 interface Post {
@@ -128,24 +128,55 @@ export default function InsightsListClient({ posts }: { posts: Post[] }) {
             ))}
           </div>
 
-          <div className="flex flex-col border-t border-kc-divider">
-            {filtered.map((post) => (
-              <JournalRow
-                key={post.slug}
-                href={`/insights/${post.slug}/`}
-                date={post.date}
-                title={post.title}
-                description={post.description}
-                sector={post.sector}
-                tagLabel={sectorLabel(post.sector)}
-              />
-            ))}
-            {filtered.length === 0 && (
-              <p className="px-3 py-12 font-body text-[14px] text-kc-text-muted">
-                No analysis in this sector yet.
-              </p>
-            )}
+          <div className="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((post, i) => {
+              const s = getSector(post.sector)
+              return (
+                <FadeIn key={post.slug} delay={(i % 3) * 0.08}>
+                  <Link
+                    href={`/insights/${post.slug}/`}
+                    className="group block h-full overflow-hidden rounded-md border border-kc-border bg-white text-inherit transition-[box-shadow,transform] duration-200 hover:-translate-y-[3px] hover:shadow-[0_20px_44px_rgba(22,33,35,0.10)]"
+                  >
+                    <div className="h-[3px]" style={{ background: s.color }} />
+                    <div className="relative aspect-[16/10] w-full overflow-hidden">
+                      {/* Source: klimate-owned */}
+                      <Image
+                        src={post.image || '/og-image.png'}
+                        alt={post.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="px-6 pb-7 pt-6">
+                      <div className="mb-3 flex flex-wrap items-center gap-3">
+                        <span
+                          className="rounded-full px-2.5 py-1 font-body text-[11px] font-semibold uppercase tracking-[0.1em]"
+                          style={{ background: s.tint, color: s.textColor }}
+                        >
+                          {sectorLabel(post.sector)}
+                        </span>
+                        <span className="font-body text-[12px] font-medium text-kc-text-muted">
+                          {formatDate(post.date)}
+                        </span>
+                      </div>
+                      <h3 className="m-0 mb-2.5 line-clamp-2 font-heading text-[19px] font-semibold leading-[1.35] tracking-[-0.01em] text-kc-dark transition-colors group-hover:text-kc-blue">
+                        {post.title}
+                      </h3>
+                      <p className="m-0 line-clamp-3 font-body text-[13.5px] leading-[1.7] text-kc-text-secondary">
+                        {post.description}
+                      </p>
+                    </div>
+                  </Link>
+                </FadeIn>
+              )
+            })}
           </div>
+          {filtered.length === 0 && (
+            <p className="px-3 py-12 font-body text-[14px] text-kc-text-muted">
+              No analysis in this sector yet.
+            </p>
+          )}
         </div>
       </section>
 
