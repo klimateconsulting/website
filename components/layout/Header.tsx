@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
@@ -27,6 +27,24 @@ const services = [
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const pathname = usePathname() || '/'
+
+  // Close the mobile menu whenever the route changes.
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [pathname])
+
+  // Lock body scroll while the mobile menu is open.
+  useEffect(() => {
+    const root = document.documentElement
+    if (mobileOpen) {
+      root.style.overflow = 'hidden'
+    } else {
+      root.style.overflow = ''
+    }
+    return () => {
+      root.style.overflow = ''
+    }
+  }, [mobileOpen])
 
   const isActive = (href: string) =>
     href === '/' ? pathname === '/' : pathname.startsWith(href)
@@ -86,9 +104,11 @@ export default function Header() {
 
       <SectorStripe />
 
-      {/* Mobile overlay */}
+      {/* Mobile overlay — positioned against the sticky header (top-full) rather
+          than viewport-fixed, because the header's backdrop-blur creates a
+          containing block that collapses a `position: fixed` panel to ~0 height. */}
       {mobileOpen && (
-        <div className="lg:hidden fixed inset-0 top-[79px] bg-kc-bg z-40 overflow-y-auto">
+        <div className="lg:hidden absolute top-full inset-x-0 h-[calc(100dvh-80px)] bg-kc-bg z-40 overflow-y-auto">
           <nav className="flex flex-col p-6 gap-1">
             <Link
               href="/services/"
