@@ -4,7 +4,7 @@ import SectorServiceLayout, {
 } from '@/components/services/SectorServiceLayout'
 
 export const metadata: Metadata = {
-  title: 'Energy Consulting | Klimate Consulting',
+  title: 'Energy Consulting',
   alternates: { canonical: '/services/energy/' },
   description:
     'Microgrid solutions, energy management R&D, and industrial energy efficiency consulting. Building a more resilient energy future.',

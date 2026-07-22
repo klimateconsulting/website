@@ -7,7 +7,7 @@ import Kicker from '@/components/shared/Kicker'
 import SectionHeader from '@/components/shared/SectionHeader'
 
 export const metadata: Metadata = {
-  title: 'About — Klimate Consulting',
+  title: 'About',
   alternates: { canonical: '/about/' },
   description:
     'Our mission: make sustainability understandable and achievable. Based in San Francisco, serving NGOs, government labs, and private sector clients.',

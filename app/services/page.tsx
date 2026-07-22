@@ -7,7 +7,7 @@ import Kicker from '@/components/shared/Kicker'
 import { SECTOR_ORDER, getSector } from '@/lib/sectors'
 
 export const metadata: Metadata = {
-  title: 'Services — Klimate Consulting',
+  title: 'Services',
   alternates: { canonical: '/services/' },
   description:
     'Technical analysis, applied research, data analytics, and policy guidance for agriculture, energy, water, and food systems.',

@@ -6,8 +6,7 @@ import CTABand from '@/components/shared/CTABand'
 import ResearchListClient from './ResearchListClient'
 
 export const metadata: Metadata = {
-  // Absolute title so the layout's "| Klimate Consulting" template isn't appended twice.
-  title: { absolute: 'Research & Publications | Klimate Consulting' },
+  title: 'Research & Publications',
   description:
     'Peer-reviewed papers, technical reports, and interactive tools by Arian Aghajanzadeh on energy, water, and agricultural sustainability, decarbonization, and demand response.',
   alternates: { canonical: '/research/' },

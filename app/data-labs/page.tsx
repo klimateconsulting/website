@@ -6,7 +6,7 @@ import Kicker from '@/components/shared/Kicker'
 import { getSector, type SectorKey } from '@/lib/sectors'
 
 export const metadata: Metadata = {
-  title: 'Klimate Data Labs — Open Sustainability Dashboards',
+  title: 'Klimate Data Labs',
   alternates: { canonical: '/data-labs/' },
   description:
     'Free, open-source data dashboards for California water, U.S. food systems, and industrial energy efficiency.',

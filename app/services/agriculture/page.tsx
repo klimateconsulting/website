@@ -4,7 +4,7 @@ import SectorServiceLayout, {
 } from '@/components/services/SectorServiceLayout'
 
 export const metadata: Metadata = {
-  title: 'Agriculture Sustainability Consulting | Klimate Consulting',
+  title: 'Agriculture Sustainability Consulting',
   alternates: { canonical: '/services/agriculture/' },
   description:
     'Research-based guidance on agricultural decarbonization, soil carbon, and sustainable farming systems. We help clients reduce emissions from farm to fork.',

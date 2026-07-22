@@ -36,11 +36,19 @@ export function generateStaticParams() {
   return getAllProjects().map((p) => ({ slug: p.slug }))
 }
 
+// Shorter <title> strings for projects whose full frontmatter title runs long
+// (the layout template appends " | Klimate Consulting"). Keeps rendered titles
+// under ~55 chars total. Falls back to the frontmatter title otherwise.
+const seoTitles: Record<string, string> = {
+  'water-system-nrdc': 'Agricultural Water Delivery Modernization',
+  'voluntary-carbon-ceres': 'Voluntary Carbon Markets Research',
+}
+
 export function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   return params.then(({ slug }) => {
     const { frontmatter } = getProjectBySlug(slug)
     return {
-      title: `${frontmatter.title} | Klimate Consulting`,
+      title: seoTitles[slug] || frontmatter.title,
       description: frontmatter.description,
       alternates: { canonical: `/projects/${slug}/` },
     }

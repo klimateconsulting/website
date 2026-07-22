@@ -4,7 +4,7 @@ import SectorServiceLayout, {
 } from '@/components/services/SectorServiceLayout'
 
 export const metadata: Metadata = {
-  title: 'Water Resource Management Consulting | Klimate Consulting',
+  title: 'Water Resource Management Consulting',
   alternates: { canonical: '/services/water/' },
   description:
     'Modernizing water management for a water-stressed world. Klimate Consulting works with utilities, agencies, and NGOs on data-driven water strategy.',
