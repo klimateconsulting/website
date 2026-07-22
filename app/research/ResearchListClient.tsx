@@ -35,6 +35,7 @@ const topicFilters: { key: string; label: string }[] = [
   { key: 'energy', label: 'Energy' },
   { key: 'water', label: 'Water' },
   { key: 'food-systems', label: 'Food Systems' },
+  { key: 'ecosystem', label: 'Ecosystems' },
 ]
 
 // Short per-row type tag — distinct from lib/publications.ts's typeLabels,

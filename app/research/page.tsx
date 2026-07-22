@@ -16,6 +16,7 @@ export const metadata: Metadata = {
       'Peer-reviewed papers, technical reports, and interactive tools on energy, water, and agricultural sustainability.',
     url: `${siteUrl}/research/`,
     type: 'website',
+    images: ['/og-image.png'],
   },
 }
 
