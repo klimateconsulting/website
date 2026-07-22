@@ -20,10 +20,13 @@ const HERO = {
     'California moves water with laws written in the 1800s. We research how to modernize it.',
 }
 
+// Above-the-fold hero: animates on mount (not on scroll). Starts at opacity 0.3
+// so the hero is never fully invisible if JS is slow/disabled (T16), and settles
+// quickly (≤0.4s). Reduced-motion users are pinned visible by globals.css.
 const fade = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0.3, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay, ease: 'easeOut' as const },
+  transition: { duration: 0.4, delay, ease: 'easeOut' as const },
 })
 
 export default function Hero() {
