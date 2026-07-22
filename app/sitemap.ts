@@ -58,6 +58,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       lastModified: new Date('2026-06-22'),
     },
+    {
+      url: `${baseUrl}/blog-posts/agtech-podcast-decade/`,
+      priority: 0.8,
+      changeFrequency: 'monthly' as const,
+      lastModified: new Date('2026-07-22'),
+    },
   ]
 
   return [...staticPages, ...projectPages, ...insightPages, ...interactivePosts]
