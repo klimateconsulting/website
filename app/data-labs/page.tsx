@@ -78,6 +78,18 @@ const DASHBOARDS: Dashboard[] = [
       { value: '47+', label: 'countries' },
     ],
   },
+  {
+    sectorKey: 'ecosystem',
+    urlLabel: 'data.klimateconsulting.com/sargassum',
+    href: 'https://data.klimateconsulting.com/sargassum/',
+    title: 'Sargassum Bloom Tracker',
+    description:
+      "Track the world's largest macroalgal bloom from space: monthly bloom maps 2002–2026, the ~2014 regime shift, and seasonal and regional trends.",
+    stats: [
+      { value: '2002–2026', label: 'monthly bloom maps' },
+      { value: '~7×', label: 'growth since 2014' },
+    ],
+  },
 ]
 
 export default function DataLabsPage() {
