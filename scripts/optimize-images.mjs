@@ -47,7 +47,7 @@ async function encodeJpeg(input, outPath, edge) {
         .toBuffer();
       const last = e === Math.round(edge * 0.7) && q === 44;
       if (buf.byteLength <= MAX_BYTES || last) {
-        await sharp(buf).toFile(outPath);
+        await writeFile(outPath, buf);
         return { bytes: buf.byteLength, q, edge: e };
       }
     }
@@ -61,7 +61,7 @@ async function encodeWebp(input, outPath, edge) {
       .webp({ quality: q, effort: 6 })
       .toBuffer();
     if (buf.byteLength <= MAX_BYTES || q === 50) {
-      await sharp(buf).toFile(outPath);
+      await writeFile(outPath, buf);
       return { bytes: buf.byteLength, q };
     }
   }

@@ -12,7 +12,7 @@ const SHOW_HERO_PHOTO = true
 // ---- Editable hero copy ----
 const HERO = {
   kicker: 'A lean, AI-native research firm',
-  titleLine1: 'National-lab rigor.',
+  titleLine1: 'Research-grade rigor.',
   titleLine2: 'AI-native speed.',
   lead: 'We deliver high-quality analysis on water, energy, agriculture — and any question in between. Deep domain expertise, paired with AI-powered research workflows that move faster and hold a higher bar for accuracy than traditional consultancies.',
   fieldNoteLabel: 'Field note · Water',

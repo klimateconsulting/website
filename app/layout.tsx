@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: '%s | Klimate Consulting',
   },
   description:
-    'Klimate Consulting delivers high-quality analysis on water, energy, agriculture — and any question in between. National-lab rigor, AI-native speed.',
+    'Klimate Consulting delivers high-quality analysis on water, energy, agriculture — and any question in between. Research-grade rigor, AI-native speed.',
   openGraph: {
     siteName: 'Klimate Consulting',
     images: ['/og-image.png'],
