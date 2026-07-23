@@ -13,37 +13,36 @@ const SHOW_HERO_PHOTO = true
 // ---- Editable hero copy ----
 const HERO = {
   kicker: 'A lean, AI-native research firm',
-  titleLine1: 'Research-grade rigor.',
+  titleLine1: 'National-lab rigor.',
   titleLine2: 'AI-native speed.',
   lead: 'We deliver high-quality analysis on water, energy, agriculture — and any question in between. Deep domain expertise, paired with AI-powered research workflows that move faster and hold a higher bar for accuracy than traditional consultancies.',
 }
 
-// One field-note slide per sector for the hero carousel (T15a). Water reuses the
-// existing aqueduct photo; the other three reuse the optimized service-area hero
-// photos already in the repo (license-clean, already <=300 KB).
+// One field-note slide per sector for the hero carousel. Each slide uses the
+// photo of a real project in that sector (same images as the Projects page).
 const FIELD_NOTES = [
   {
     sector: 'Water',
-    image: '/images/insights/california-aqueduct-kern.jpg',
-    alt: 'The California Aqueduct near Kern County',
+    image: '/images/projects/water-system-modernization.webp',
+    alt: 'Irrigation canal delivering water to California farmland',
     note: 'California moves water with laws written in the 1800s. We research how to modernize it.',
   },
   {
     sector: 'Energy',
-    image: '/images/services/energy-hero.jpg',
-    alt: 'Solar panel array under blue sky',
+    image: '/images/projects/energy-water-management.webp',
+    alt: 'Industrial cooling towers reflected in water',
     note: 'Industrial facilities buy more energy than they need. We research where the waste hides — and how to manage it out.',
   },
   {
     sector: 'Agriculture',
-    image: '/images/services/agriculture-hero.jpg',
-    alt: 'Aerial view of agricultural crop rows',
+    image: '/images/insights/almond-microirrigation.jpg',
+    alt: 'Almond orchard rows with microirrigation lines',
     note: 'We believe agriculture is the next frontier. We map where the biggest gains hide.',
   },
   {
     sector: 'Food Systems',
-    image: '/images/services/food-systems-hero.jpg',
-    alt: 'Food distribution and supply-chain facility',
+    image: '/images/projects/food-center.jpg',
+    alt: 'Food and beverage processing facility',
     note: 'Most food-system impacts happen far from the farm gate. We trace them end to end.',
   },
 ]
