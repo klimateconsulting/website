@@ -1,17 +1,17 @@
 import Link from 'next/link'
 import Kicker from '@/components/shared/Kicker'
 import FadeIn from '@/components/shared/FadeIn'
+import Carousel from '@/components/shared/Carousel'
 import ProjectCard from '@/components/shared/ProjectCard'
-import { getProjectBySlug } from '@/lib/mdx'
+import { getAllProjects } from '@/lib/mdx'
 
-// Three featured projects (span energy / water / agriculture). Data pulled from
-// each project's MDX frontmatter so titles + images stay in sync.
-const FEATURED_SLUGS = ['energy-water-lbnl', 'water-system-nrdc', 'cea-lbnl']
-
+// Carousel of ALL projects (newest first), 3 visible on desktop / 1 on mobile,
+// advancing one card at a time and wrapping. Data pulled from each project's MDX
+// frontmatter so titles + images stay in sync.
 export default function FeaturedProjects() {
-  const projects = FEATURED_SLUGS.map((slug) => ({
-    slug,
-    ...getProjectBySlug(slug).frontmatter,
+  const projects = getAllProjects().map((p) => ({
+    slug: p.slug,
+    ...p.frontmatter,
   }))
 
   return (
@@ -32,10 +32,14 @@ export default function FeaturedProjects() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-          {projects.map((p, i) => (
-            <FadeIn key={p.slug} delay={i * 0.1}>
+        <FadeIn>
+          <Carousel
+            ariaLabel="Featured projects"
+            slideClassName="basis-full md:basis-[calc(50%-0.875rem)] lg:basis-[calc(33.333%-1.167rem)]"
+          >
+            {projects.map((p) => (
               <ProjectCard
+                key={p.slug}
                 slug={p.slug}
                 title={p.title}
                 client={p.client}
@@ -43,9 +47,9 @@ export default function FeaturedProjects() {
                 image={p.image}
                 description={p.description}
               />
-            </FadeIn>
-          ))}
-        </div>
+            ))}
+          </Carousel>
+        </FadeIn>
       </div>
     </section>
   )

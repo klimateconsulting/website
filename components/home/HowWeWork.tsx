@@ -6,8 +6,8 @@ const CARDS = [
   {
     n: '01',
     color: '#0F4C81',
-    title: 'Research-grade rigor',
-    body: 'Our team comes from national laboratories and peer-reviewed research. Every claim is sourced, every number traceable — analysis you can put in front of a review board.',
+    title: 'Rigor first',
+    body: 'We rely solely on credible scientific literature and primary data. We do the research ourselves — and we stand by our results. Every claim is sourced, every number traceable — analysis you can put in front of a review board.',
   },
   {
     n: '02',
@@ -19,7 +19,7 @@ const CARDS = [
     n: '03',
     color: '#70A288',
     title: 'Lean by design',
-    body: 'No leverage pyramid, no pass-through layers. You work directly with the senior researchers doing the analysis — and get answers in weeks, not quarters.',
+    body: 'No leverage pyramid, no pass-through layers. You work directly with the senior researchers doing the analysis — and get answers in days or weeks, not quarters.',
   },
 ]
 

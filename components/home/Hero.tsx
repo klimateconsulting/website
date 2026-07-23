@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import Kicker from '@/components/shared/Kicker'
+import Carousel from '@/components/shared/Carousel'
 import { SECTOR_ORDER, SECTORS } from '@/lib/sectors'
 
 // Toggle the right-column hero photo (client picks photo-on vs. typographic-only).
@@ -15,15 +16,44 @@ const HERO = {
   titleLine1: 'National-lab rigor.',
   titleLine2: 'AI-native speed.',
   lead: 'We deliver high-quality analysis on water, energy, agriculture — and any question in between. Deep domain expertise, paired with AI-powered research workflows that move faster and hold a higher bar for accuracy than traditional consultancies.',
-  fieldNoteLabel: 'Field note · Water',
-  fieldNote:
-    'California moves water with laws written in the 1800s. We research how to modernize it.',
 }
 
+// One field-note slide per sector for the hero carousel. Each slide uses the
+// photo of a real project in that sector (same images as the Projects page).
+const FIELD_NOTES = [
+  {
+    sector: 'Water',
+    image: '/images/projects/water-system-modernization.webp',
+    alt: 'Irrigation canal delivering water to California farmland',
+    note: 'California moves water with laws written in the 1800s. We research how to modernize it.',
+  },
+  {
+    sector: 'Energy',
+    image: '/images/projects/energy-water-management.webp',
+    alt: 'Industrial cooling towers reflected in water',
+    note: 'Industrial facilities buy more energy than they need. We research where the waste hides — and how to manage it out.',
+  },
+  {
+    sector: 'Agriculture',
+    image: '/images/insights/almond-microirrigation.jpg',
+    alt: 'Almond orchard rows with microirrigation lines',
+    note: 'We believe agriculture is the next frontier. We map where the biggest gains hide.',
+  },
+  {
+    sector: 'Food Systems',
+    image: '/images/projects/food-center.jpg',
+    alt: 'Food and beverage processing facility',
+    note: 'Most food-system impacts happen far from the farm gate. We trace them end to end.',
+  },
+]
+
+// Above-the-fold hero: animates on mount (not on scroll). Starts at opacity 0.3
+// so the hero is never fully invisible if JS is slow/disabled (T16), and settles
+// quickly (≤0.4s). Reduced-motion users are pinned visible by globals.css.
 const fade = (delay: number) => ({
-  initial: { opacity: 0, y: 20 },
+  initial: { opacity: 0.3, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay, ease: 'easeOut' as const },
+  transition: { duration: 0.4, delay, ease: 'easeOut' as const },
 })
 
 export default function Hero() {
@@ -89,31 +119,34 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right column — framed photo + field note */}
+        {/* Right column — field-note carousel (one slide per sector) */}
         {SHOW_HERO_PHOTO && (
-          <motion.div
-            {...fade(0.24)}
-            className="relative hidden lg:block"
-          >
-            <div className="rounded-md overflow-hidden shadow-[0_24px_60px_rgba(15,76,129,0.14)]">
-              {/* Source: klimate-owned */}
-              <Image
-                src="/images/insights/california-aqueduct-kern.jpg"
-                alt="The California Aqueduct near Kern County"
-                width={620}
-                height={460}
-                className="block w-full h-[460px] object-cover"
-                priority
-              />
-            </div>
-            <div className="absolute -left-7 bottom-8 bg-white border border-kc-border border-l-[3px] border-l-kc-blue rounded px-[22px] py-[18px] shadow-[0_12px_32px_rgba(22,33,35,0.10)] max-w-[300px]">
-              <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-secondary mb-1.5">
-                {HERO.fieldNoteLabel}
-              </div>
-              <div className="font-heading text-[15px] font-medium leading-[1.45] text-kc-dark">
-                {HERO.fieldNote}
-              </div>
-            </div>
+          <motion.div {...fade(0.24)} className="hidden lg:block">
+            <Carousel ariaLabel="Field notes by focus area">
+              {FIELD_NOTES.map((fn) => (
+                <div key={fn.sector} className="relative pb-7 pl-7">
+                  <div className="rounded-md overflow-hidden shadow-[0_24px_60px_rgba(15,76,129,0.14)]">
+                    {/* Source: klimate-owned */}
+                    <Image
+                      src={fn.image}
+                      alt={fn.alt}
+                      width={620}
+                      height={440}
+                      className="block w-full h-[440px] object-cover"
+                      priority
+                    />
+                  </div>
+                  <div className="absolute left-0 bottom-0 bg-white border border-kc-border border-l-[3px] border-l-kc-blue rounded px-[22px] py-[18px] shadow-[0_12px_32px_rgba(22,33,35,0.10)] max-w-[300px]">
+                    <div className="font-body text-[11px] font-semibold uppercase tracking-[0.14em] text-kc-text-secondary mb-1.5">
+                      Field note · {fn.sector}
+                    </div>
+                    <div className="font-heading text-[15px] font-medium leading-[1.45] text-kc-dark">
+                      {fn.note}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </motion.div>
         )}
       </div>

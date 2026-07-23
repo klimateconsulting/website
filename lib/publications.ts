@@ -436,7 +436,7 @@ export const publications: Publication[] = [
     year: 2026,
     date: '2026-06-12',
     url: '/blog-posts/sargassum/',
-    topics: ['water'],
+    topics: ['ecosystem'],
     gated: false,
   },
   {

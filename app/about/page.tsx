@@ -7,7 +7,7 @@ import Kicker from '@/components/shared/Kicker'
 import SectionHeader from '@/components/shared/SectionHeader'
 
 export const metadata: Metadata = {
-  title: 'About — Klimate Consulting',
+  title: 'About',
   alternates: { canonical: '/about/' },
   description:
     'Our mission: make sustainability understandable and achievable. Based in San Francisco, serving NGOs, government labs, and private sector clients.',
@@ -28,7 +28,7 @@ const STORY = {
     'Klimate Consulting was founded on a simple premise: the organizations best positioned to drive progress on water, energy, and agriculture often lack the specialized expertise to do it. We bridge that gap.',
     'Based in San Francisco, we work at the intersection of applied research, data analysis, and technical consulting — serving government, national labs, nonprofits, utilities, academia, startups, and venture capital.',
   ],
-  image: '/images/projects/energy-water-management.png',
+  image: '/images/projects/energy-water-management.webp',
   imageAlt: 'Klimate Consulting project work',
 }
 
@@ -154,8 +154,8 @@ export default function AboutPage() {
                 <p className="font-body text-base leading-relaxed text-kc-text-secondary">
                   This is the trajectory we work toward: pulling the line away from
                   business-as-usual, reaching net-zero by mid-century, then net-negative through
-                  carbon removal. Every Klimate engagement — from microgrid deployments and energy
-                  management research to food-system decarbonization and water modernization — is
+                  carbon removal. Every Klimate engagement — from industrial energy research and
+                  energy management to food-system decarbonization and water modernization — is
                   aimed at moving that line.
                 </p>
               </div>

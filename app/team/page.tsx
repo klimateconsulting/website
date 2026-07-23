@@ -7,7 +7,7 @@ import Kicker from '@/components/shared/Kicker'
 import SectorStripe from '@/components/shared/SectorStripe'
 
 export const metadata: Metadata = {
-  title: 'Team — Klimate Consulting',
+  title: 'Team',
   alternates: { canonical: '/team/' },
   description:
     'Meet the Klimate Consulting team. Experts in sustainability research, energy, water, and agriculture.',

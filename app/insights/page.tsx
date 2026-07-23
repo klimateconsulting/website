@@ -3,7 +3,7 @@ import { getAllInsights } from '@/lib/mdx'
 import InsightsListClient from './InsightsListClient'
 
 export const metadata: Metadata = {
-  title: 'Insights — Klimate Consulting',
+  title: 'Insights',
   alternates: { canonical: '/insights/' },
   description:
     'Research-grade articles on agriculture, energy, water, and food systems decarbonization.',

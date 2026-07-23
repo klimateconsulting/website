@@ -7,6 +7,7 @@ const TOOLS = [
   { label: 'U.S. Food & Ag Value Chain', color: '#70A288', href: 'https://data.klimateconsulting.com/food-ag/' },
   { label: 'EnMS Opportunity Finder', color: '#FFAD05', href: 'https://data.klimateconsulting.com/enms/' },
   { label: 'EnMS Insights Database', color: '#220C10', href: 'https://data.klimateconsulting.com/enms-insights/' },
+  { label: 'Sargassum Bloom Tracker', color: '#70A288', href: 'https://data.klimateconsulting.com/sargassum/' },
 ]
 
 export default function DataLabsTeaser() {

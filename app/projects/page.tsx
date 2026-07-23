@@ -21,7 +21,7 @@ const CTA_SUBLINE =
 const CTA_BUTTON_LABEL = 'Get in touch'
 
 export const metadata: Metadata = {
-  title: 'Our Work — Klimate Consulting',
+  title: 'Our Work',
   alternates: { canonical: '/projects/' },
   description:
     'Case studies from our applied research and consulting with LBNL, NRDC, Ceres, Carba, and Scale Microgrid.',

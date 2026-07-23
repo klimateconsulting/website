@@ -14,6 +14,19 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- canonical: set to the /insights/ overview page if you prefer that indexed instead -->
 <link rel="canonical" href="https://klimateconsulting.com/blog-posts/agtech-podcast-decade/">
+<link rel="stylesheet" href="/blog-posts/_shared/site-nav.css">
+<script src="/blog-posts/_shared/site-nav.js" defer></script>
+<style id="kc-overflow-fix">
+/* T18: prevent horizontal overflow at mobile widths. The stat-tile row used
+   fixed 330px columns (overflowed narrow screens); make it fluid. Charts and
+   their wrappers get max-width/min-width guards so an oversized canvas never
+   pushes the page wider. Quote content is untouched. */
+.wrap{min-width:0}
+.tiles{max-width:100%}
+.chart{max-width:100%}
+@media (max-width:760px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:440px){.tiles{grid-template-columns:1fr!important}}
+</style>
 <script>
 /*
 * Licensed to the Apache Software Foundation (ASF) under one

@@ -68,8 +68,7 @@ export function generateMetadata({ params }: { params: Promise<{ slug: string }>
       'navigating-esg-disclosure': 'Navigating the ESG Disclosure Landscape: Challenges and Promises',
       'navigating-the-changing-tides-of-sustainability':
         'Beyond Carbon: How Klimate Consulting Approaches Modern Sustainability',
-      'microirrigation-energy-paradox':
-        'The Microirrigation Energy Paradox: Why California Farm Electricity Use Is Rising',
+      'microirrigation-energy-paradox': 'The Microirrigation Energy Paradox',
       'sargassum-golden-tide':
         "The Golden Tide: Tracking the World's Largest Seaweed Bloom",
     }

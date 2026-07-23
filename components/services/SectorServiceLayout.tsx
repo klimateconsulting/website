@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Button from '@/components/shared/Button'
@@ -31,6 +32,8 @@ export interface SectorServiceConfig {
   whatWeDoHeading: string
   /** Two prose paragraphs (existing sector copy). */
   paragraphs: string[]
+  /** Optional extra node rendered after the paragraphs (e.g. a paragraph with inline links). */
+  whatWeDoExtra?: ReactNode
   /** Grey-panel eyebrow, e.g. "Our water services". */
   servicesLabel: string
   /** Six service bullets (existing copy). */
@@ -129,6 +132,7 @@ export default function SectorServiceLayout(config: SectorServiceConfig) {
                   {p}
                 </p>
               ))}
+              {config.whatWeDoExtra}
             </div>
           </FadeIn>
 

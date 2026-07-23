@@ -1,12 +1,13 @@
 // Client bar — "Trusted by" + client names. Wordmarks in Space Grotesk 600
 // (no logo lockups exist for these; names read as a quiet trust bar).
-const CLIENTS = [
-  'Lawrence Berkeley National Laboratory',
-  'NRDC',
-  'UC Davis',
-  'Ceres',
-  'Carba',
-  'Scale Microgrid Solutions',
+// Each links out to the org's homepage (new tab).
+const CLIENTS: { name: string; href: string }[] = [
+  { name: 'Berkeley Lab', href: 'https://www.lbl.gov' },
+  { name: 'NRDC', href: 'https://www.nrdc.org' },
+  { name: 'UC Davis', href: 'https://www.ucdavis.edu' },
+  { name: 'Ceres', href: 'https://www.ceres.org' },
+  { name: 'Carba', href: 'https://www.carba.com' },
+  { name: 'Scale Microgrid Solutions', href: 'https://www.scalemicrogrids.com' },
 ]
 
 export default function ClientLogos() {
@@ -18,12 +19,15 @@ export default function ClientLogos() {
         </span>
         <div className="flex flex-wrap items-center gap-x-7 gap-y-3 md:flex-1 md:justify-between">
           {CLIENTS.map((c) => (
-            <span
-              key={c}
-              className="font-heading text-sm font-semibold text-kc-text-lead"
+            <a
+              key={c.name}
+              href={c.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-heading text-sm font-semibold text-kc-text-lead hover:underline"
             >
-              {c}
-            </span>
+              {c.name}
+            </a>
           ))}
         </div>
       </div>
