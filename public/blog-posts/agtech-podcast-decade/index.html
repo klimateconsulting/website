@@ -525,5 +525,56 @@ c.setOption({
     data:[{yAxis:17,label:{formatter:'17 distinct gap concepts',color:C.mut,fontSize:10,position:'insideEndTop'}}]}}]});
 })();
 </script>
+<style id="kc-mobile-fix">
+/* Mobile layout fixes (validated at 390px). Layout/presentation only —
+   report text, quotes, and data are untouched. */
+@media (max-width:840px){ .tgrid{grid-template-columns:1fr 1fr} }
+@media (max-width:600px){
+  .tgrid{grid-template-columns:1fr}
+  .fam{grid-template-columns:1fr}
+  .kc-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  .kc-scroll > .chart{min-width:720px}
+  .kc-swipe-hint{font-size:11.5px;color:#a7a5a0;text-align:center;margin:6px 0 2px;display:block}
+}
+</style>
+<script id="kc-mobile-fix-js">
+/* On phones, the six wide charts become horizontal-swipe panels at full
+   desktop detail — tooltips, legends and evidence clicks keep working. */
+(function(){
+  var mq=window.matchMedia('(max-width:600px)');
+  var WIDE=['c_prev','c_river','c_traj','c_sun','c_chord','c_heat'];
+  var done=false;
+  function apply(){
+    if(done||!mq.matches)return;
+    done=true;
+    WIDE.forEach(function(id){
+      var el=document.getElementById(id);
+      if(!el||el.parentElement.classList.contains('kc-scroll'))return;
+      var sc=document.createElement('div');sc.className='kc-scroll';
+      el.parentNode.insertBefore(sc,el);sc.appendChild(el);
+      var h=document.createElement('span');h.className='kc-swipe-hint';
+      h.textContent='← swipe to explore the full chart →';
+      sc.parentNode.insertBefore(h,sc);
+    });
+    try{
+      var rv=echarts.getInstanceByDom(document.getElementById('c_river'));
+      if(rv)rv.setOption({grid:{bottom:118}});
+    }catch(e){}
+    window.dispatchEvent(new Event('resize'));
+    setTimeout(function(){
+      ['c_sun','c_chord'].forEach(function(id){
+        var el=document.getElementById(id);if(!el)return;
+        var sc=el.parentElement;
+        if(sc.classList.contains('kc-scroll'))sc.scrollLeft=(el.scrollWidth-sc.clientWidth)/2;
+      });
+    },400);
+  }
+  if(mq.matches){
+    if(document.readyState==='complete')apply();
+    else window.addEventListener('load',apply);
+  }
+  if(mq.addEventListener)mq.addEventListener('change',apply);else mq.addListener(apply);
+})();
+</script>
 </body>
 </html>
